@@ -244,15 +244,11 @@ class Model implements ModelInterface
      * Convert array to model instance.
      *
      * @param array $modelData
-     * @return Model
+     * @return self
      */
     protected function createModelInstance($modelData)
     {
-        return new (get_called_class())(
-            $this->dbConnection,
-            $this->dbName,
-            $modelData
-        );
+        return new static($this->dbConnection, $this->dbName, $modelData);
     }
 
     /**
@@ -505,9 +501,7 @@ class Model implements ModelInterface
         $result = $query->get();
 
         if (!empty($result)) {
-            $model = $this->createModelInstance(
-                $result
-            );
+            $model = $this->createModelInstance($result);
         }
 
         return $model;
