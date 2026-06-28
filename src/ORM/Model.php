@@ -455,7 +455,7 @@ class Model implements ModelInterface
      * but save it also.
      *
      * @param array $modelData
-     * @return object
+     * @return self
      */
     public function create($modelData)
     {
@@ -596,7 +596,7 @@ class Model implements ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function where($field, $operator, $value)
     {
@@ -613,7 +613,7 @@ class Model implements ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function andWhere($field, $operator, $value)
     {
@@ -630,7 +630,7 @@ class Model implements ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function orWhere($field, $operator, $value)
     {
@@ -648,7 +648,7 @@ class Model implements ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function whereHas(
         $relation,

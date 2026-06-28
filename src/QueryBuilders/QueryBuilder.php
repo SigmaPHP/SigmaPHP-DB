@@ -38,7 +38,7 @@ class QueryBuilder implements QueryBuilderInterface
      * Select the table which will be used to perform the query.
      *
      * @param string $table
-     * @return object
+     * @return $this
      */
     public function table($table)
     {
@@ -51,7 +51,7 @@ class QueryBuilder implements QueryBuilderInterface
      * set , all fields in the table will be returned (using '*').
      *
      * @param array $fields
-     * @return object
+     * @return $this
      */
     public function select($fields)
     {
@@ -82,7 +82,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $column
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function where($column, $operator, $value)
     {
@@ -97,7 +97,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $column
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function andWhere($column, $operator, $value)
     {
@@ -112,7 +112,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $column
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function orWhere($column, $operator, $value)
     {
@@ -127,7 +127,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $column
      * @param string $value1
      * @param string $value2
-     * @return object
+     * @return $this
      */
     public function whereBetween($column, $value1, $value2)
     {
@@ -144,7 +144,7 @@ class QueryBuilder implements QueryBuilderInterface
      *
      * @param string $column
      * @param array $values
-     * @return object
+     * @return $this
      */
     public function whereIn($column, $values)
     {
@@ -166,7 +166,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $column
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function having($column, $operator, $value)
     {
@@ -178,7 +178,7 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * Remove duplicates in result.
      *
-     * @return object
+     * @return $this
      */
     public function distinct()
     {
@@ -197,7 +197,7 @@ class QueryBuilder implements QueryBuilderInterface
      *
      * @param int $count
      * @param int $offset
-     * @return object
+     * @return $this
      */
     public function limit($count, $offset = '')
     {
@@ -214,7 +214,7 @@ class QueryBuilder implements QueryBuilderInterface
      * Order the result rows based on some columns.
      *
      * @param array $columns
-     * @return object
+     * @return $this
      */
     public function orderBy($columns)
     {
@@ -227,7 +227,7 @@ class QueryBuilder implements QueryBuilderInterface
      * Group the result rows based on some columns.
      *
      * @param array $columns
-     * @return object
+     * @return $this
      */
     public function groupBy($columns)
     {
@@ -244,7 +244,7 @@ class QueryBuilder implements QueryBuilderInterface
      *
      * @param QueryBuilder $query the second query to combine with
      * @param bool $all a flag to activate distinct values (by default false)
-     * @return object
+     * @return $this
      */
     public function union($query, $all)
     {
@@ -266,7 +266,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @param string $operator
      * @param string $column2
      * @param string $type
-     * @return object
+     * @return $this
      */
     public function join(
         $table,

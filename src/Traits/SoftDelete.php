@@ -20,11 +20,11 @@ trait SoftDelete
             [$this->primary => $this->values[$this->primary]]
         );
     }
-    
+
     /**
      * Allow soft deleted models to be returned in the query results.
      *
-     * @return object
+     * @return $this
      */
     public function withTrashed()
     {
@@ -35,14 +35,14 @@ trait SoftDelete
     /**
      * Return only soft deleted models in the query results.
      *
-     * @return object
+     * @return $this
      */
     public function onlyTrashed()
     {
         $this->fetchOnlyTrashed = true;
         return $this;
     }
-    
+
     /**
      * Restore soft deleted model.
      *
@@ -59,7 +59,7 @@ trait SoftDelete
         // mark the model as exists
         $this->isNew = false;
     }
-    
+
     /**
      * Check if model was soft deleted.
      *

@@ -13,15 +13,15 @@ interface ModelInterface
      * @return string
      */
     public function getTableName();
-    
+
     /**
      * Create model from an array of data.
-     * 
+     *
      * @param array $modelData
-     * @return object
+     * @return self
      */
     public function create($modelData);
-        
+
     /**
      * Fetch all models.
      *
@@ -66,7 +66,7 @@ interface ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function where($field, $operator, $value);
 
@@ -76,7 +76,7 @@ interface ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function andWhere($field, $operator, $value);
 
@@ -86,7 +86,7 @@ interface ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function orWhere($field, $operator, $value);
 
@@ -97,18 +97,18 @@ interface ModelInterface
      * @param string $field
      * @param string $operator
      * @param string $value
-     * @return object
+     * @return $this
      */
     public function whereHas($relation, $field, $operator, $value);
-    
+
     /**
-     * Save model , by updating current model 
+     * Save model , by updating current model
      * or creating new one.
      *
      * @return mixed
      */
     public function save();
-    
+
     /**
      * Delete model.
      *
@@ -117,7 +117,7 @@ interface ModelInterface
     public function delete();
 
     /**
-     * Get one/many models in another table 
+     * Get one/many models in another table
      * related to this model.
      *
      * @param Model $model
