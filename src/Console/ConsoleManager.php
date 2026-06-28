@@ -64,7 +64,7 @@ class ConsoleManager implements ConsoleManagerInterface
      * @param string $input
      * @return void
      */
-    final public function execute($input)
+    public function execute($input)
     {
         $command = $input[1] ?? 'help';
         $argument = $input[2] ?? null;

@@ -213,7 +213,7 @@ class Migration implements MigrationInterface
      * @param array $options
      * @return void
      */
-    final public function createTable($name, $fields, $options = [])
+    public function createTable($name, $fields, $options = [])
     {
         // start create table statement
         $createTableStatement = "CREATE TABLE $name";
@@ -301,7 +301,7 @@ class Migration implements MigrationInterface
      * @param array $options
      * @return void
      */
-    final public function updateTable($name, $options)
+    public function updateTable($name, $options)
     {
         // start update table statement
         $updateTableStatement = "ALTER TABLE $name";
@@ -339,7 +339,7 @@ class Migration implements MigrationInterface
      * @param string $newName
      * @return void
      */
-    final public function renameTable($currentName, $newName)
+    public function renameTable($currentName, $newName)
     {
         $this->execute("
             ALTER TABLE {$currentName} RENAME {$newName};
@@ -352,7 +352,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return bool
      */
-    final public function checkTable($name)
+    public function checkTable($name)
     {
         return $this->tableExists($this->dbName, $name);
     }
@@ -365,7 +365,7 @@ class Migration implements MigrationInterface
      * @param string $newPrimaryKey
      * @return void
      */
-    final public function changeTablePrimaryKey(
+    public function changeTablePrimaryKey(
         $table,
         $oldPrimaryKey,
         $newPrimaryKey
@@ -383,7 +383,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return void
      */
-    final public function dropTable($name)
+    public function dropTable($name)
     {
         $this->execute("DROP TABLE {$name};");
     }
@@ -396,7 +396,7 @@ class Migration implements MigrationInterface
      * @param array $properties
      * @return void
      */
-    final public function addColumn($table, $name, $properties)
+    public function addColumn($table, $name, $properties)
     {
         $field = $this->convertFieldToSql([
             'name' => $name,
@@ -413,7 +413,7 @@ class Migration implements MigrationInterface
      * @param array $properties
      * @return void
      */
-    final public function updateColumn($table, $name, $properties)
+    public function updateColumn($table, $name, $properties)
     {
         $field = $this->convertFieldToSql([
             'name' => $name,
@@ -430,7 +430,7 @@ class Migration implements MigrationInterface
      * @param string $newName
      * @return void
      */
-    final public function renameColumn($table, $currentName, $newName)
+    public function renameColumn($table, $currentName, $newName)
     {
         $this->execute("
             ALTER TABLE $table RENAME COLUMN $currentName TO $newName;
@@ -444,7 +444,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return bool
      */
-    final public function checkColumn($table, $name)
+    public function checkColumn($table, $name)
     {
         return (bool) $this->fetch("
             SELECT
@@ -467,7 +467,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return void
      */
-    final public function dropColumn($table, $name)
+    public function dropColumn($table, $name)
     {
         $this->execute("ALTER TABLE $table DROP COLUMN $name;");
     }
@@ -482,7 +482,7 @@ class Migration implements MigrationInterface
      * @param array $order
      * @return void
      */
-    final public function addIndex(
+    public function addIndex(
         $table,
         $name,
         $columns,
@@ -521,7 +521,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return bool
      */
-    final public function checkIndex($table, $name)
+    public function checkIndex($table, $name)
     {
         return (bool) $this->fetch("
             SHOW INDEX FROM $table WHERE Key_name='$name';
@@ -535,7 +535,7 @@ class Migration implements MigrationInterface
      * @param string $name
      * @return void
      */
-    final public function dropIndex($table, $name)
+    public function dropIndex($table, $name)
     {
         $this->execute("
             ALTER TABLE $table DROP INDEX $name;
@@ -553,7 +553,7 @@ class Migration implements MigrationInterface
      * @param array $options
      * @return void
      */
-    final public function addForeignKey(
+    public function addForeignKey(
         $constraint,
         $parentTable,
         $localIds,
@@ -588,7 +588,7 @@ class Migration implements MigrationInterface
      * @param string $constraint
      * @return bool
      */
-    final public function checkForeignKey($table, $constraint)
+    public function checkForeignKey($table, $constraint)
     {
         return (bool) $this->fetch("
             SELECT
@@ -609,7 +609,7 @@ class Migration implements MigrationInterface
      * @param string $constraint
      * @return void
      */
-    final public function dropForeignKey($table, $constraint)
+    public function dropForeignKey($table, $constraint)
     {
         $this->execute("
             ALTER TABLE $table DROP FOREIGN KEY $constraint;

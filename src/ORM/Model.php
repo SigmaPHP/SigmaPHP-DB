@@ -414,7 +414,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return void
      */
-    final public function __set($field, $value)
+    public function __set($field, $value)
     {
         if (!in_array($field, $this->fields)) {
             throw new NotFoundException("Unknown field $field");
@@ -430,7 +430,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return void
      */
-    final public function __get($field)
+    public function __get($field)
     {
         if (!in_array($field, $this->fields)) {
             throw new NotFoundException("Unknown field $field");
@@ -444,7 +444,7 @@ class Model implements ModelInterface
      *
      * @return string
      */
-    final public function getTableName()
+    public function getTableName()
     {
         return $this->table;
     }
@@ -457,7 +457,7 @@ class Model implements ModelInterface
      * @param array $modelData
      * @return object
      */
-    final public function create($modelData)
+    public function create($modelData)
     {
         $model = $this->createModelInstance($modelData);
         $model->save();
@@ -470,7 +470,7 @@ class Model implements ModelInterface
      *
      * @return array<static>
      */
-    final public function all()
+    public function all()
     {
         $models = [];
         $query = $this->query()
@@ -494,7 +494,7 @@ class Model implements ModelInterface
      *
      * @return static|null
      */
-    final public function first()
+    public function first()
     {
         $model = null;
         $query = $this->query()
@@ -518,7 +518,7 @@ class Model implements ModelInterface
      *
      * @return int
      */
-    final public function count()
+    public function count()
     {
         $query = $this->query()->select([
             'count(distinct ' .
@@ -537,7 +537,7 @@ class Model implements ModelInterface
      * @param mixed $primaryValue
      * @return static|null
      */
-    final public function find($primaryValue)
+    public function find($primaryValue)
     {
         $model = null;
         $query = $this->query()
@@ -567,7 +567,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return static|null
      */
-    final public function findBy($field, $value)
+    public function findBy($field, $value)
     {
         $model = null;
         $query = $this->query()
@@ -598,7 +598,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return object
      */
-    final public function where($field, $operator, $value)
+    public function where($field, $operator, $value)
     {
         $this->setCondition(
             $field, $operator, $value
@@ -615,7 +615,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return object
      */
-    final public function andWhere($field, $operator, $value)
+    public function andWhere($field, $operator, $value)
     {
         $this->setCondition(
             $field, $operator, $value, 'and'
@@ -632,7 +632,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return object
      */
-    final public function orWhere($field, $operator, $value)
+    public function orWhere($field, $operator, $value)
     {
         $this->setCondition(
             $field, $operator, $value, 'or'
@@ -650,7 +650,7 @@ class Model implements ModelInterface
      * @param string $value
      * @return object
      */
-    final public function whereHas(
+    public function whereHas(
         $relation,
         $field = '',
         $operator = '',
@@ -669,7 +669,7 @@ class Model implements ModelInterface
      *
      * @return mixed
      */
-    final public function save()
+    public function save()
     {
         $values = [];
 
@@ -713,7 +713,7 @@ class Model implements ModelInterface
      * @param bool $forceHardDelete
      * @return void
      */
-    final public function delete($forceHardDelete = false)
+    public function delete($forceHardDelete = false)
     {
         if ($this->isUsingSoftDelete() && !$forceHardDelete) {
             // we disable the "Undefined method ..." warning , since this method
@@ -744,7 +744,7 @@ class Model implements ModelInterface
      * @param string $localKey
      * @return array<static>
      */
-    final public function hasRelation($model, $foreignKey, $localKey)
+    public function hasRelation($model, $foreignKey, $localKey)
     {
         $relationModel = new ($model)(
             $this->dbConnection,

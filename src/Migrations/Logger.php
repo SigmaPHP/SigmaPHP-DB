@@ -57,7 +57,7 @@ class Logger implements LoggerInterface
      * @param $string $migration the migration file name
      * @return void
      */
-    final public function log($migration)
+    public function log($migration)
     {
         $this->insert($this->logsTable, [
             ['migration' => $migration]
@@ -70,7 +70,7 @@ class Logger implements LoggerInterface
      * @param array $migrations
      * @return array
      */
-    final public function canBeMigrated($migrations)
+    public function canBeMigrated($migrations)
     {
         $allLoggedMigrations = $this->fetchColumn("
             SELECT migration FROM {$this->logsTable};
@@ -88,7 +88,7 @@ class Logger implements LoggerInterface
      * @param string $date
      * @return array
      */
-    final public function canBeRolledBack($date = '')
+    public function canBeRolledBack($date = '')
     {
         $dateExpression = '';
 
@@ -123,7 +123,7 @@ class Logger implements LoggerInterface
      * @param string $migration the migration file name
      * @return void
      */
-    final public function removeLog($migration)
+    public function removeLog($migration)
     {
         $this->delete($this->logsTable, ['migration' => $migration]);
     }

@@ -16,7 +16,7 @@ class Connector implements ConnectorInterface
 
     /**
      * Connector Constructor
-     * 
+     *
      * @param array $configs
      */
     public function __construct($configs)
@@ -26,10 +26,10 @@ class Connector implements ConnectorInterface
 
     /**
      * Create new PDO connection.
-     * 
+     *
      * @return \PDO
      */
-    final public function connect()
+    public function connect()
     {
         return new \PDO(
             "mysql:host={$this->configs['host']};
@@ -42,10 +42,10 @@ class Connector implements ConnectorInterface
 
     /**
      * Get the database name.
-     * 
+     *
      * @return string
      */
-    final public function getDatabaseName()
+    public function getDatabaseName()
     {
         return $this->configs['name'];
     }
