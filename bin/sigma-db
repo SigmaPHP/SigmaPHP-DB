@@ -3,6 +3,18 @@
 
 require 'vendor/autoload.php';
 
-$console = new \SigmaPHP\DB\Console\ConsoleManager();
+use SigmaPHP\Console\App;
 
-$console->execute($argv);
+// define app version
+const VERSION = "0.1.16";
+
+// initiate new console app
+$app = new App();
+
+$app->setAppName('SigmaPHP-DB');
+$app->setAppDescription('CLI utilities for `SigmaPHP-DB`');
+$app->setAppVersion(VERSION);
+
+$app->loadCommands(__DIR__ . '/../src/Commands', 'SigmaPHP\\DB\\Commands');
+
+$app->run();
