@@ -1,7 +1,15 @@
 {
     "name": "sigmaphp/sigmaphp-db",
     "description": "PHP Database Tools",
-	"keywords": ["SigmaPHP", "framework"],
+	"keywords": [
+        "SigmaPHP",
+        "framework",
+        "database",
+        "orm",
+        "migration",
+        "seeder",
+        "query builder"
+    ],
     "type": "library",
 	"license": "MIT",
     "autoload": {
@@ -21,10 +29,13 @@
         }
     ],
     "require": {
-        "doctrine/inflector": "2.*"
+        "php": ">=8.0",
+        "doctrine/inflector": "2.*",
+        "sigmaphp/sigmaphp-console": "^0.1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "agashe/var-dumper": "^0.1.0"
     },
     "scripts": {
         "test": [
