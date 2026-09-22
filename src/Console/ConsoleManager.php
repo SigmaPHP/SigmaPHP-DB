@@ -49,11 +49,7 @@ class ConsoleManager implements ConsoleManagerInterface
      */
     public function __construct()
     {
-        $this->basePath = dirname(
-            (new \ReflectionClass(
-                \Composer\Autoload\ClassLoader::class
-            ))->getFileName()
-        , 3);
+
 
         $this->inflector = InflectorFactory::create()->build();
     }

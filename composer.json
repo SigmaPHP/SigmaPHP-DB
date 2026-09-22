@@ -31,7 +31,8 @@
     "require": {
         "php": ">=8.0",
         "doctrine/inflector": "2.*",
-        "sigmaphp/sigmaphp-console": "^0.1.0"
+        "sigmaphp/sigmaphp-console": "^0.1.0",
+        "sigmaphp/sigmaphp-filesystem": "^0.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
