@@ -1,0 +1,14 @@
+<?php
+
+use SigmaPHP\DB\Seeders\Seeder;
+
+class $className extends Seeder
+{
+    /**
+     * @return void
+     */
+    public function run()
+    {
+        // run method
+    }
+}

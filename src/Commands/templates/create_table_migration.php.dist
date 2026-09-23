@@ -1,0 +1,31 @@
+<?php
+
+use SigmaPHP\DB\Migrations\Migration;
+
+class $className extends Migration
+{
+    /**
+     * @return void
+     */
+    public function up()
+    {
+        $this->createTable(
+            '$tableName',
+            [
+                ['name' => 'id', 'type' => 'bigint', 'primary' => true],
+                /**
+                 * add your columns !
+                 */
+                ['name' => 'timestamps']
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function down()
+    {
+        $this->dropTable('$tableName');
+    }
+}
