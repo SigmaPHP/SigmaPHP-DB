@@ -50,8 +50,6 @@ class ConsoleManager implements ConsoleManagerInterface
     public function __construct()
     {
 
-
-        $this->inflector = InflectorFactory::create()->build();
     }
 
     /**

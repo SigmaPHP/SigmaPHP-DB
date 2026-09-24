@@ -7,6 +7,7 @@ use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
 use SigmaPHP\DB\Traits\DbConfigs;
 use SigmaPHP\DB\Traits\DbConnection;
+use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Create Model Command.
@@ -48,6 +49,34 @@ class CreateModel extends Command
      */
     public function execute()
     {
+        $fileName = $this->getArgument('name')->getValue();
+        $configs = $this->loadConfigs(
+            $this->getOption('config')->getValue()
+        );
 
+        $filesystem = new Filesystem();
+
+        $modelsFilesPath = $this->getBasePath() . '/' .
+            $configs['path_to_models'];
+
+        if (!$filesystem->exists($modelsFilesPath)) {
+            $filesystem->createDir($modelsFilesPath);
+        }
+
+        $className = ucfirst($fileName);
+        $modelFile = $modelsFilesPath . '/' . $fileName . '.php';
+
+        $filesystem->create($modelFile);
+        $filesystem->write($modelFile,
+            str_replace(
+                '$className',
+                $className,
+                $filesystem->read(__DIR__ . '/templates/model.php.dist')
+            )
+        );
+
+        $this->success(
+            "The model '{$fileName}' was created successfully"
+        );
     }
 }

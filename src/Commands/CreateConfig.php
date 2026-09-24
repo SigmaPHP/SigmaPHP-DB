@@ -3,9 +3,7 @@
 namespace SigmaPHP\DB\Commands;
 
 use SigmaPHP\Console\Command;
-use SigmaPHP\Console\DataType;
 use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
 use SigmaPHP\Filesystem\Filesystem;
 
 /**
@@ -13,7 +11,7 @@ use SigmaPHP\Filesystem\Filesystem;
  */
 class CreateConfig extends Command
 {
-    use DbConfigs, DbConnection;
+    use DbConfigs;
 
     /**
      * Initialize the command.
@@ -25,13 +23,13 @@ class CreateConfig extends Command
         $this->setName('create:config');
         $this->setDescription('Create a new config file');
 
-        $this->addArgument(
+        $this->addOption(
             'path',
-            'The path to the config file',
-            DataType::STRING
+            'p',
+            'The path to store the config file'
         );
 
-        // no way we will provide path config file, while we don't have one :D
+        // this is will conflict with the '--path' option
         $this->removeOption('config');
     }
 
@@ -42,13 +40,19 @@ class CreateConfig extends Command
      */
     public function execute()
     {
-        $fileSystem = new Filesystem();
+        $filesystem = new Filesystem();
 
-        $this->createFile(
-            $path ?: $this->basePath,
-            self::DEFAULT_CONFIG_FILE_NAME,
-            file_get_contents(__DIR__ . '/templates/database.php.dist'),
-            'Config'
+        $path = $this->getBasePath() . '/database.php';
+
+        if ($this->hasOption('path')) {
+            $path = $this->getOption('path')->getValue();
+        }
+
+        $filesystem->copy(
+            __DIR__ . '/templates/database.php.dist',
+            $path
         );
+
+        $this->success('The config file was created successfully');
     }
 }
