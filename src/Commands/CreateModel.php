@@ -2,19 +2,21 @@
 
 namespace SigmaPHP\DB\Commands;
 
+use Doctrine\Inflector\InflectorFactory;
 use SigmaPHP\Console\Command;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
+use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
 use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
 use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\DB\Commands\CreateMigration;
 
 /**
  * Create Model Command.
  */
 class CreateModel extends Command
 {
-    use DbConfigs, DbConnection;
+    use DbConfigs;
 
     /**
      * Initialize the command.
@@ -54,6 +56,14 @@ class CreateModel extends Command
             $this->getOption('config')->getValue()
         );
 
+        if (!isset($configs['path_to_models']) ||
+            empty($configs['path_to_models'])
+        ) {
+            throw new InvalidConfigurationException(
+                "Missing config 'path_to_models'"
+            );
+        }
+
         $filesystem = new Filesystem();
 
         $modelsFilesPath = $this->getBasePath() . '/' .
@@ -78,5 +88,18 @@ class CreateModel extends Command
         $this->success(
             "The model '{$fileName}' was created successfully"
         );
+
+        // handle migration creation
+        if ($this->hasOption('with-migration')) {
+            $inflector = InflectorFactory::create()->build();
+            $migrationFileName = $inflector->pluralize($fileName);
+
+            $createMigrationCommand = new CreateMigration();
+            $createMigrationCommand->getArgument('name')->setValue(
+                "Create{$migrationFileName}Table"
+            );
+
+            $createMigrationCommand->execute();
+        }
     }
 }

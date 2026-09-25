@@ -3,6 +3,7 @@
 namespace SigmaPHP\DB\Traits;
 
 use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
+use SigmaPHP\DB\Traits\HelperMethods;
 
 /**
  * DB Configs Trait.

@@ -20,7 +20,7 @@ trait DbConnection
     {
         if (empty($connection) || !is_array($connection)) {
             throw new InvalidConfigurationException(
-                "Couldn't connect to database , missing config!"
+                "Couldn't connect to database , missing/invalid configs!"
             );
         }
 
