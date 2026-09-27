@@ -43,7 +43,7 @@
             "Composer\\Config::disableProcessTimeout",
             "cp src/Commands/templates/database.php.dist database.php",
             "./vendor/bin/phpunit tests/",
-            "rm database.php"
+            "rm -f database.php"
         ]
     },
     "bin": "bin/sigma-db"
