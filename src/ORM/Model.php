@@ -779,4 +779,14 @@ class Model implements ModelInterface
 
         return $models;
     }
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        return $this->dbConnection;
+    }
 }

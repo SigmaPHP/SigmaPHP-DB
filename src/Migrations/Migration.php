@@ -615,4 +615,14 @@ class Migration implements MigrationInterface
             ALTER TABLE $table DROP FOREIGN KEY $constraint;
         ");
     }
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        return $this->dbConnection;
+    }
 }

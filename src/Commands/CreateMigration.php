@@ -41,9 +41,7 @@ class CreateMigration extends Command
     public function execute()
     {
         $fileName = $this->getArgument('name')->getValue();
-        $configs = $this->loadConfigs(
-            $this->getOption('config')->getValue()
-        );
+        $configs = $this->loadConfigs($this->getOption('config')->getValue());
 
         $inflector = InflectorFactory::create()->build();
         $filesystem = new Filesystem();

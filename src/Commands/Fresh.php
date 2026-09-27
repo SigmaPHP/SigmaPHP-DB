@@ -3,17 +3,15 @@
 namespace SigmaPHP\DB\Commands;
 
 use SigmaPHP\Console\Command;
-use SigmaPHP\Console\DataType;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
+use SigmaPHP\DB\Commands\Drop;
+use SigmaPHP\DB\Commands\Migrate;
+use SigmaPHP\DB\Commands\Seed;
 
 /**
  * Fresh Command.
  */
 class Fresh extends Command
 {
-    use DbConfigs, DbConnection;
-
     /**
      * Initialize the command.
      *
@@ -21,7 +19,7 @@ class Fresh extends Command
      */
     public function init()
     {
-        $this->setName('drop');
+        $this->setName('fresh');
         $this->setDescription(
             'Drop all tables, run all migrations and seed the database'
         );
@@ -34,6 +32,8 @@ class Fresh extends Command
      */
     public function execute()
     {
-
+        (new Drop())->execute();
+        (new Migrate())->execute();
+        (new Seed())->execute();
     }
 }

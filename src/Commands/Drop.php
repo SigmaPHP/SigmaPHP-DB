@@ -20,11 +20,6 @@ class Drop extends Command
     }
 
     /**
-     * @var \PDO $dbConnection
-     */
-    private $dbConnection;
-
-    /**
      * Initialize the command.
      *
      * @return void
@@ -49,6 +44,24 @@ class Drop extends Command
         }
 
         $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $tables = $this->getAllTables($configs['database_connection']['name']);
+
+        foreach ($tables as $table) {
+            $this->executeQuery("DROP TABLE {$table};");
+            $this->writeln("Drop table {$table} was successfully completed");
+        }
+
+        $this->success("All tables were dropped successfully");
+    }
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        $configs = $this->loadConfigs($this->getOption('config')->getValue());
 
         if (!isset($configs['database_connection']) ||
             empty($configs['database_connection'])
@@ -58,17 +71,6 @@ class Drop extends Command
             );
         }
 
-        $this->dbConnection = $this->getDbConnection(
-            $configs['database_connection']
-        );
-
-        $tables = $this->getAllTables($configs['database_connection']['name']);
-
-        foreach ($tables as $table) {
-            $this->executeQuery("DROP TABLE {$table};");
-            $this->writeln("Drop table {$table}; Success");
-        }
-
-        $this->success("All tables were dropped successfully");
+        return $this->getDbConnection($configs['database_connection']);
     }
 }
