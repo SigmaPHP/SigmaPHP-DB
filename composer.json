@@ -41,7 +41,7 @@
     "scripts": {
         "test": [
             "Composer\\Config::disableProcessTimeout",
-            "cp src/Console/templates/database.php.dist database.php",
+            "cp src/Commands/templates/database.php.dist database.php",
             "./vendor/bin/phpunit tests/",
             "rm database.php"
         ]

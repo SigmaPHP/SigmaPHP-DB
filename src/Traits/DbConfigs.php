@@ -20,7 +20,8 @@ trait DbConfigs
      */
     public function loadConfigs($path = '')
     {
-        $configFilePath = $this->getBasePath() . '/database.php';
+        $configFilePath = (!empty($path)) ? $path :
+            $this->getBasePath() . '/database.php';
 
         if (!file_exists($configFilePath)) {
             throw new InvalidConfigurationException(
