@@ -39,18 +39,8 @@ class CreateSeeder extends Command
      */
     public function execute()
     {
-        $fileName = $this->getArgument('name')->getValue();
-        $configs = $this->loadConfigs(
-            $this->getOption('config')->getValue()
-        );
-
-        if (!isset($configs['path_to_seeders']) ||
-            empty($configs['path_to_seeders'])
-        ) {
-            throw new InvalidConfigurationException(
-                "Missing config 'path_to_seeders'"
-            );
-        }
+        $fileName = (string) $this->getArgument('name');
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         $filesystem = new Filesystem();
 
@@ -62,19 +52,26 @@ class CreateSeeder extends Command
         }
 
         $className = ucfirst($fileName);
-        $seederFile = $modelsFilesPath . '/' . $fileName . '.php';
+
+        // add 'Seeder' automatically if the name doesn't have it
+        // and if does , then ignore
+        if (stripos($fileName, 'Seeder') === false) {
+            $className .= 'Seeder';
+        }
+
+        $seederFile = $modelsFilesPath . '/' . $className . '.php';
 
         $filesystem->create($seederFile);
         $filesystem->write($seederFile,
             str_replace(
                 '$className',
                 $className,
-                $filesystem->read(__DIR__ . '/templates/model.php.dist')
+                $filesystem->read(__DIR__ . '/templates/seeder.php.dist')
             )
         );
 
         $this->success(
-            "The seeder '{$fileName}' was created successfully"
+            "The seeder '{$className}' was created successfully"
         );
     }
 }

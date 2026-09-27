@@ -43,7 +43,7 @@ class Drop extends Command
             return;
         }
 
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
         $tables = $this->getAllTables($configs['database_connection']['name']);
 
         foreach ($tables as $table) {
@@ -61,7 +61,7 @@ class Drop extends Command
      */
     public function db()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         if (!isset($configs['database_connection']) ||
             empty($configs['database_connection'])

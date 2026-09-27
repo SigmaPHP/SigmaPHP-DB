@@ -45,7 +45,7 @@ class Migrate extends Command
      */
     public function execute()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
         $migrationFilesPath = $this->getBasePath() . '/' .
             $configs['path_to_migrations'];
         $filesystem = new Filesystem();
@@ -57,7 +57,7 @@ class Migrate extends Command
             $migrations[] = str_replace(
                 '.php',
                 '',
-                $this->getOption('file')->getValue()
+                $this->getOption('file')
             );
         } else {
             $migrations = $filesystem->list($migrationFilesPath, false, false);
@@ -102,7 +102,7 @@ class Migrate extends Command
      */
     public function db()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         if (!isset($configs['database_connection']) ||
             empty($configs['database_connection'])

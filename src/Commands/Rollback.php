@@ -46,13 +46,13 @@ class Rollback extends Command
      */
     public function execute()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
         $migrationFilesPath = $this->getBasePath() . '/' .
             $configs['path_to_migrations'];
 
         $logger = new Logger($this->db(), $configs['logs_table_name']);
         $migrations = $logger->canBeRolledBack(
-            $this->getOption('date')->getValue()
+            $this->getOption('date')
         );
 
         if (empty($migrations)) {
@@ -91,7 +91,7 @@ class Rollback extends Command
      */
     public function db()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         if (!isset($configs['database_connection']) ||
             empty($configs['database_connection'])

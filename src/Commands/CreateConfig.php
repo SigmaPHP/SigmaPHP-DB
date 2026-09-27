@@ -30,7 +30,9 @@ class CreateConfig extends Command
         );
 
         // this is will conflict with the '--path' option
-        $this->removeOption('config');
+        if (isset($this->options['config'])) {
+            $this->removeOption('config');
+        }
     }
 
     /**
@@ -45,7 +47,7 @@ class CreateConfig extends Command
         $path = $this->getBasePath() . '/database.php';
 
         if ($this->hasOption('path')) {
-            $path = $this->getOption('path')->getValue();
+            $path = $this->getOption('path');
         }
 
         $filesystem->copy(

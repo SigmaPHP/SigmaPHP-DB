@@ -45,7 +45,7 @@ class Seed extends Command
      */
     public function execute()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
         $seederFilesPath = $this->getBasePath() . '/' .
             $configs['path_to_seeders'];
         $filesystem = new Filesystem();
@@ -57,7 +57,7 @@ class Seed extends Command
             $seeders[] = str_replace(
                 '.php',
                 '',
-                $this->getOption('file')->getValue()
+                $this->getOption('file')
             );
         } else {
             $seeders = $filesystem->list($seederFilesPath, false, false);
@@ -86,7 +86,7 @@ class Seed extends Command
      */
     public function db()
     {
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         if (!isset($configs['database_connection']) ||
             empty($configs['database_connection'])

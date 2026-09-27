@@ -5,7 +5,6 @@ namespace SigmaPHP\DB\Commands;
 use SigmaPHP\Console\Command;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
 use Doctrine\Inflector\InflectorFactory;
 use SigmaPHP\Filesystem\Filesystem;
 
@@ -40,8 +39,8 @@ class CreateMigration extends Command
      */
     public function execute()
     {
-        $fileName = $this->getArgument('name')->getValue();
-        $configs = $this->loadConfigs($this->getOption('config')->getValue());
+        $fileName = (string) $this->getArgument('name');
+        $configs = $this->loadConfigs($this->getOption('config'));
 
         $inflector = InflectorFactory::create()->build();
         $filesystem = new Filesystem();
@@ -121,13 +120,13 @@ class CreateMigration extends Command
         }
 
         // create the file and write the content
-        $migrationFile = $migrationFilesPath . '/' . $fileName . '.php';
+        $migrationFile = $migrationFilesPath . '/' . $className . '.php';
 
         $filesystem->create($migrationFile);
         $filesystem->write($migrationFile, $template);
 
         $this->success(
-            "The migration file '{$fileName}' was created successfully"
+            "The migration file '{$className}' was created successfully"
         );
     }
 }

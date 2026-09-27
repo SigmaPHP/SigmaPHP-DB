@@ -38,7 +38,7 @@ class CreateModel extends Command
             'with-migration',
             'm',
             'Generate a migration file for the model',
-            Option::PARAMETER_OPTIONAL,
+            Option::PARAMETER_NONE,
             DataType::BOOL,
             false
         );
@@ -51,18 +51,10 @@ class CreateModel extends Command
      */
     public function execute()
     {
-        $fileName = $this->getArgument('name')->getValue();
+        $fileName = (string) $this->getArgument('name');
         $configs = $this->loadConfigs(
-            $this->getOption('config')->getValue()
+            $this->getOption('config')
         );
-
-        if (!isset($configs['path_to_models']) ||
-            empty($configs['path_to_models'])
-        ) {
-            throw new InvalidConfigurationException(
-                "Missing config 'path_to_models'"
-            );
-        }
 
         $filesystem = new Filesystem();
 
@@ -74,7 +66,7 @@ class CreateModel extends Command
         }
 
         $className = ucfirst($fileName);
-        $modelFile = $modelsFilesPath . '/' . $fileName . '.php';
+        $modelFile = $modelsFilesPath . '/' . $className . '.php';
 
         $filesystem->create($modelFile);
         $filesystem->write($modelFile,
@@ -86,7 +78,7 @@ class CreateModel extends Command
         );
 
         $this->success(
-            "The model '{$fileName}' was created successfully"
+            "The model '{$className}' was created successfully"
         );
 
         // handle migration creation
