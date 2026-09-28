@@ -57,7 +57,7 @@ class Seed extends Command
             $seeders[] = str_replace(
                 '.php',
                 '',
-                $this->getOption('file')
+                (string) $this->getOption('file')
             );
         } else {
             $seeders = $filesystem->list($seederFilesPath, false, false);

@@ -57,7 +57,7 @@ class Migrate extends Command
             $migrations[] = str_replace(
                 '.php',
                 '',
-                $this->getOption('file')
+                (string) $this->getOption('file')
             );
         } else {
             $migrations = $filesystem->list($migrationFilesPath, false, false);
