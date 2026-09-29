@@ -1,14 +1,15 @@
 <?php
 
 use SigmaPHP\DB\Tests\TestCases\CommandTestCase;
-use SigmaPHP\DB\Commands\Migrate;
+use SigmaPHP\DB\Commands\Rollback;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
+use SigmaPHP\DB\Migrations\Logger;
 
 /**
- * Migrate Command Test
+ * Rollback Command Test
  */
-class MigrateTest extends CommandTestCase
+class RollbackTest extends CommandTestCase
 {
     /**
      * Test command execution.
@@ -18,7 +19,13 @@ class MigrateTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $command = new _Migrate();
+        $this->createTestTable('users');
+
+        // create fake log for users table creation
+        $logger = new Logger($this->connectToDatabase(), 'db_logs');
+        $logger->log('UsersMigration');
+
+        $command = new _Rollback();
 
         $command->setIOHandler($this->ioHandler);
         $command->addOption(
@@ -33,22 +40,26 @@ class MigrateTest extends CommandTestCase
 
         $command->execute();
 
-        $this->assertTrue($this->checkTableExists('users'));
-        $this->assertEquals(4, count($this->getTableFields('users')));
+        $this->assertFalse($this->checkTableExists('users'));
 
-        $this->dropTestTable('users');
         $this->dropTestTable('db_logs');
     }
 
     /**
-     * Test file option.
+     * Test date option.
      *
      * @runInSeparateProcess
      * @return void
      */
-    public function testFileOption()
+    public function testDateOption()
     {
-        $command = new _Migrate();
+        $this->createTestTable('users');
+
+        // create fake log for users table creation
+        $logger = new Logger($this->connectToDatabase(), 'db_logs');
+        $logger->log('UsersMigration');
+
+        $command = new _Rollback();
 
         $command->setIOHandler($this->ioHandler);
         $command->addOption(
@@ -60,19 +71,17 @@ class MigrateTest extends CommandTestCase
         );
 
         $command->_options()['config']->setValue('config.php');
-        $command->_options()['file']->setValue('UsersMigration.php');
+        $command->_options()['date']->setValue(date('Y-m-d'));
 
         $command->execute();
 
-        $this->assertTrue($this->checkTableExists('users'));
-        $this->assertEquals(4, count($this->getTableFields('users')));
+        $this->assertFalse($this->checkTableExists('users'));
 
-        $this->dropTestTable('users');
         $this->dropTestTable('db_logs');
     }
 }
 
-class _Migrate extends Migrate
+class _Rollback extends Rollback
 {
     public function _options() {return $this->options;}
     public function _arguments() {return $this->arguments;}

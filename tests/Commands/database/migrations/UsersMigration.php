@@ -14,7 +14,8 @@ class UsersMigration extends Migration
             [
                 ['name' => 'id', 'type' => 'bigint', 'primary' => true],
                 ['name' => 'name', 'type' => 'varchar'],
-                ['name' => 'age', 'type' => 'varchar'],
+                ['name' => 'email', 'type' => 'varchar'],
+                ['name' => 'age', 'type' => 'int'],
             ]
         );
     }

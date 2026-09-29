@@ -33,6 +33,12 @@ class CommandTestCase extends DbTestCase
         $this->ioHandler = new IO();
         $this->ioHandler->setOutputStream(fopen('php://memory', 'w+'));
 
+        if (!file_exists('fake_input_stream')) {
+            touch('fake_input_stream');
+
+            $this->ioHandler->setInputStream(fopen('fake_input_stream', 'r+'));
+        }
+
         if (!file_exists('config.php')) {
             $path = 'tests/Commands/database';
 
@@ -56,6 +62,7 @@ class CommandTestCase extends DbTestCase
                 ];
                 CONFIG
             );
+
         }
     }
 
@@ -68,6 +75,10 @@ class CommandTestCase extends DbTestCase
     {
         if (file_exists('config.php')) {
             unlink('config.php');
+        }
+
+        if (file_exists('fake_input_stream')) {
+            unlink('fake_input_stream');
         }
     }
 }
