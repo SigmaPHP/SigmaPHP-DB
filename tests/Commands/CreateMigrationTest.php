@@ -18,7 +18,7 @@ class CreateMigrationTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $targetPath = 'UsersMigration.php';
+        $targetPath = __DIR__ . '/database/migrations/FooMigration.php';
         $command = new _CreateMigration();
 
         $command->setIOHandler($this->ioHandler);
@@ -30,7 +30,7 @@ class CreateMigrationTest extends CommandTestCase
             DataType::STRING
         );
 
-        $command->_arguments()['name']->setValue('Users');
+        $command->_arguments()['name']->setValue('Foo');
         $command->_options()['config']->setValue('config.php');
 
         $command->execute();

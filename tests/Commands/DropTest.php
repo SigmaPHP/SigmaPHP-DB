@@ -1,14 +1,14 @@
 <?php
 
 use SigmaPHP\DB\Tests\TestCases\CommandTestCase;
-use SigmaPHP\DB\Commands\CreateSeeder;
+use SigmaPHP\DB\Commands\Drop;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
 
 /**
- * Create Seeder Command Test
+ * Drop Command Test
  */
-class CreateSeederTest extends CommandTestCase
+class DropTest extends CommandTestCase
 {
     /**
      * Test command execution.
@@ -18,8 +18,9 @@ class CreateSeederTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $targetPath = __DIR__ . '/database/seeders/FooSeeder.php';
-        $command = new _CreateSeeder();
+        $this->createTestTable('users');
+
+        $command = new _Drop();
 
         $command->setIOHandler($this->ioHandler);
         $command->addOption(
@@ -30,20 +31,21 @@ class CreateSeederTest extends CommandTestCase
             DataType::STRING
         );
 
-        $command->_arguments()['name']->setValue('Foo');
         $command->_options()['config']->setValue('config.php');
+
+        $res = fopen('fake_input_stream', 'r+');
+        ftruncate($res, 0);
+        rewind($res);
+        fwrite($res, 'YES');
+        rewind($res);
 
         $command->execute();
 
-        $this->assertTrue(file_exists($targetPath));
-
-        if (file_exists($targetPath)) {
-            unlink($targetPath);
-        }
+        $this->assertFalse($this->checkTableExists('users'));
     }
 }
 
-class _CreateSeeder extends CreateSeeder
+class _Drop extends Drop
 {
     public function _options() {return $this->options;}
     public function _arguments() {return $this->arguments;}

@@ -18,7 +18,7 @@ class CreateModelTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $targetPath = 'Users.php';
+        $targetPath = __DIR__ . '/database/models/Users.php';
         $command = new _CreateModel();
 
         $command->setIOHandler($this->ioHandler);

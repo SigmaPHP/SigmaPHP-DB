@@ -86,11 +86,12 @@ class CreateModel extends Command
             $inflector = InflectorFactory::create()->build();
             $migrationFileName = $inflector->pluralize($fileName);
 
-            $createMigrationCommand = new CreateMigration();
+            $createMigrationCommand = new CreateMigration($this->options);
             $createMigrationCommand->getArgument('name')->setValue(
                 "Create{$migrationFileName}Table"
             );
 
+            $createMigrationCommand->setIOHandler($this->io);
             $createMigrationCommand->execute();
         }
     }

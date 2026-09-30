@@ -32,8 +32,19 @@ class Fresh extends Command
      */
     public function execute()
     {
-        (new Drop())->execute();
-        (new Migrate())->execute();
-        (new Seed())->execute();
+        // drop all table
+        $dropCommand = new Drop($this->options);
+        $dropCommand->setIOHandler($this->io);
+        $dropCommand->execute();
+
+        // run migrations
+        $migrateCommand = new Migrate($this->options);
+        $migrateCommand->setIOHandler($this->io);
+        $migrateCommand->execute();
+
+        // seed
+        $seedCommand = new Seed($this->options);
+        $seedCommand->setIOHandler($this->io);
+        $seedCommand->execute();
     }
 }
