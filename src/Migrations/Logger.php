@@ -127,4 +127,14 @@ class Logger implements LoggerInterface
     {
         $this->delete($this->logsTable, ['migration' => $migration]);
     }
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        return $this->dbConnection;
+    }
 }

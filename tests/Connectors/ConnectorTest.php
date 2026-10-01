@@ -1,7 +1,6 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
-
 use SigmaPHP\DB\Connectors\Connector;
 
 /**
@@ -13,7 +12,7 @@ class ConnectorTest extends TestCase
      * @var array $dbConfigs
      */
     private $dbConfigs;
-    
+
     /**
      * @var Connector $connector
      */
@@ -34,7 +33,7 @@ class ConnectorTest extends TestCase
             'pass' => $GLOBALS['DB_PASS'],
             'port' => $GLOBALS['DB_PORT']
         ];
-        
+
         // create new connector
         $this->connector = new Connector($this->dbConfigs);
     }
@@ -50,22 +49,6 @@ class ConnectorTest extends TestCase
         $this->assertInstanceOf(
             \PDO::class,
             $this->connector->connect()
-        );
-    }
-
-    /**
-     * Test connector returns database name.
-     *
-     * @runInSeparateProcess
-     * @return void
-     */
-    public function testConnectorReturnsDatabaseName()
-    {
-        $this->dbConfigs['name'] = 'db_test';
-
-        $this->assertEquals(
-            'db_test',
-            $this->connector->getDatabaseName()
         );
     }
 }

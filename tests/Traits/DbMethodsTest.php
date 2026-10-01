@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use SigmaPHP\DB\Tests\TestCases\DbTestCase;
 use SigmaPHP\DB\Traits\DbMethods;
@@ -12,7 +12,7 @@ class DbMethodsTest extends DbTestCase
      * @var object $testTrait
      */
     private $testTrait;
-    
+
     /**
      * DbMethodsTest SetUp
      *
@@ -26,7 +26,7 @@ class DbMethodsTest extends DbTestCase
         // implements DbMethods Trait
         $this->testTrait = $this->createTestObject();
     }
-    
+
     /**
      * Create new instance from test class.
      *
@@ -38,10 +38,15 @@ class DbMethodsTest extends DbTestCase
             use DbMethods;
 
             private $dbConnection;
-            
+
             public function __construct($dbConnection)
             {
                 $this->dbConnection = $dbConnection;
+            }
+
+            public function db()
+            {
+                return $this->dbConnection;
             }
         };
     }
@@ -78,9 +83,9 @@ class DbMethodsTest extends DbTestCase
             INSERT INTO test
                 (name, email)
             VALUES
-                ('test1', 'test1@test.local'), 
-                ('test2', 'test2@test.local'), 
-                ('test3', 'test3@test.local'); 
+                ('test1', 'test1@test.local'),
+                ('test2', 'test2@test.local'),
+                ('test3', 'test3@test.local');
         ");
 
         $addTestData->execute();
@@ -104,9 +109,9 @@ class DbMethodsTest extends DbTestCase
             INSERT INTO test
                 (name, email)
             VALUES
-                ('test1', 'test1@test.local'), 
-                ('test2', 'test2@test.local'), 
-                ('test3', 'test3@test.local'); 
+                ('test1', 'test1@test.local'),
+                ('test2', 'test2@test.local'),
+                ('test3', 'test3@test.local');
         ");
 
         $addTestData->execute();
@@ -117,7 +122,7 @@ class DbMethodsTest extends DbTestCase
 
         $this->assertEquals(3, count($result));
     }
-    
+
     /**
      * Test fetch single column from from the resulted data.
      *
@@ -130,9 +135,9 @@ class DbMethodsTest extends DbTestCase
             INSERT INTO test
                 (name, email)
             VALUES
-                ('test1', 'test1@test.local'), 
-                ('test2', 'test2@test.local'), 
-                ('test3', 'test3@test.local'); 
+                ('test1', 'test1@test.local'),
+                ('test2', 'test2@test.local'),
+                ('test3', 'test3@test.local');
         ");
 
         $addTestData->execute();
@@ -156,7 +161,7 @@ class DbMethodsTest extends DbTestCase
             $this->dbConfigs['name'], 'test'
         ));
     }
-    
+
     /*
      * Test get all tables names in database.
      *

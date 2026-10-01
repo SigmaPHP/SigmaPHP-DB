@@ -39,4 +39,18 @@ trait HelperMethods
 
         return rtrim(implode(",", $tokens), ",");
     }
+
+    /**
+     * Get the root path of the project.
+     *
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return dirname(
+            (new \ReflectionClass(
+                \Composer\Autoload\ClassLoader::class
+            ))->getFileName()
+        , 3);
+    }
 }

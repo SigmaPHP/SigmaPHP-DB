@@ -34,15 +34,8 @@ class HelperMethodsTest extends DbTestCase
      */
     private function createTestObject()
     {
-        return new class($this->connectToDatabase()) {
+        return new class() {
             use HelperMethods;
-
-            private $dbConnection;
-
-            public function __construct($dbConnection)
-            {
-                $this->dbConnection = $dbConnection;
-            }
         };
     }
 
@@ -149,5 +142,16 @@ class HelperMethodsTest extends DbTestCase
                 true
             )
         );
+    }
+
+    /**
+     * Test get base bath.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testGetBaseBath()
+    {
+        $this->assertNotNull($this->testTrait->getBasePath());
     }
 }

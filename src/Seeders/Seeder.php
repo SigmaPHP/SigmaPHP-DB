@@ -22,10 +22,10 @@ class Seeder implements SeederInterface
      * @var QueryBuilder $queryBuilder
      */
     protected $queryBuilder;
-    
+
     /**
      * Seeder Constructor
-     * 
+     *
      * @param \PDO $dbConnection
      */
     public function __construct($dbConnection)
@@ -36,11 +36,21 @@ class Seeder implements SeederInterface
 
     /**
      * Execute seeder instructions.
-     * 
+     *
      * This method will be overridden by children classes (seeders). And
      * will be called by the 'seed' command in the CLI tool.
-     * 
+     *
      * @return void
      */
     public function run(){}
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        return $this->dbConnection;
+    }
 }

@@ -8,6 +8,13 @@ namespace SigmaPHP\DB\Traits;
 trait DbMethods
 {
     /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    abstract public function db();
+
+    /**
      * Execute SQL statements.
      *
      * @param string $statement
@@ -15,9 +22,9 @@ trait DbMethods
      */
     public function execute($statement)
     {
-        return $this->dbConnection->prepare($statement)->execute();
+        return ($this->db())->prepare($statement)->execute();
     }
-    
+
     /**
      * Execute SQL query and fetch single result.
      *
@@ -26,26 +33,26 @@ trait DbMethods
      */
     public function fetch($query)
     {
-        $handler = $this->dbConnection->prepare($query);
+        $handler = ($this->db())->prepare($query);
         $handler->execute();
         return $handler->fetch(\PDO::FETCH_ASSOC);
     }
-    
+
     /**
-     * Execute SQL query and fetch all the rows in the result. 
+     * Execute SQL query and fetch all the rows in the result.
      *
      * @param string $query
      * @return array
      */
     public function fetchAll($query)
     {
-        $handler = $this->dbConnection->prepare($query);
+        $handler = ($this->db())->prepare($query);
         $handler->execute();
         return $handler->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
     /**
-     * Execute SQL query and fetch single column values. 
+     * Execute SQL query and fetch single column values.
      *
      * @param string $query
      * @param int $columnId
@@ -53,13 +60,13 @@ trait DbMethods
      */
     public function fetchColumn($query, $columnId = 0)
     {
-        $handler = $this->dbConnection->prepare($query);
+        $handler = ($this->db())->prepare($query);
         $handler->execute();
         return $handler->fetchAll(\PDO::FETCH_COLUMN, $columnId);
     }
 
     /**
-     * Check if table exists. 
+     * Check if table exists.
      *
      * @param string $dbName
      * @param string $tableName
@@ -70,17 +77,17 @@ trait DbMethods
         return (bool) $this->fetch("
             SELECT
                 TABLE_NAME
-            FROM 
+            FROM
                 INFORMATION_SCHEMA.TABLES
-            WHERE 
+            WHERE
                 TABLE_SCHEMA = '{$dbName}'
             AND
                 TABLE_NAME = '{$tableName}';
         ");
     }
-    
+
     /**
-     * Get all tables names in the database. 
+     * Get all tables names in the database.
      *
      * @param string $dbName
      * @return array
@@ -92,7 +99,7 @@ trait DbMethods
                 TABLE_NAME
             FROM
                 INFORMATION_SCHEMA.TABLES
-            WHERE 
+            WHERE
                 TABLE_SCHEMA = '{$dbName}';
         ");
     }

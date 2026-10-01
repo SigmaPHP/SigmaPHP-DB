@@ -310,4 +310,14 @@ class QueryBuilder implements QueryBuilderInterface
     {
         return rtrim($this->statement) . ";";
     }
+
+    /**
+     * Get the database's connection.
+     *
+     * @return \PDO
+     */
+    public function db()
+    {
+        return $this->dbConnection;
+    }
 }

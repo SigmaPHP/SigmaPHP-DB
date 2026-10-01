@@ -99,8 +99,8 @@ class SoftDeleteTest extends DbTestCase
             INSERT INTO test_soft_delete
                 (name, email, age, deleted_at)
             VALUES
-                ('test1', 'test1@testing.com', 15, NULL), 
-                ('test2', 'test2@testing.com', 25, NOW()), 
+                ('test1', 'test1@testing.com', 15, NULL),
+                ('test2', 'test2@testing.com', 25, NOW()),
                 ('test3', 'test3@testing.com', 35, NULL);
         ");
 
@@ -108,7 +108,7 @@ class SoftDeleteTest extends DbTestCase
 
         $this->assertEquals(2, $this->model->count());
     }
-    
+
     /**
      * Test soft deleted models cen be returned in the queries.
      *
@@ -121,8 +121,8 @@ class SoftDeleteTest extends DbTestCase
             INSERT INTO test_soft_delete
                 (name, email, age, deleted_at)
             VALUES
-                ('test1', 'test1@testing.com', 15, NULL), 
-                ('test2', 'test2@testing.com', 25, NOW()), 
+                ('test1', 'test1@testing.com', 15, NULL),
+                ('test2', 'test2@testing.com', 25, NOW()),
                 ('test3', 'test3@testing.com', 35, NULL);
         ");
 
@@ -143,8 +143,8 @@ class SoftDeleteTest extends DbTestCase
             INSERT INTO test_soft_delete
                 (name, email, age, deleted_at)
             VALUES
-                ('test1', 'test1@testing.com', 15, NOW()), 
-                ('test2', 'test2@testing.com', 25, NULL), 
+                ('test1', 'test1@testing.com', 15, NOW()),
+                ('test2', 'test2@testing.com', 25, NULL),
                 ('test3', 'test3@testing.com', 35, NOW());
         ");
 
@@ -165,7 +165,7 @@ class SoftDeleteTest extends DbTestCase
             INSERT INTO test_soft_delete
                 (name, email, age, deleted_at)
             VALUES
-                ('test1', 'test1@testing.com', 15, NULL), 
+                ('test1', 'test1@testing.com', 15, NULL),
                 ('test2', 'test2@testing.com', 25, NOW()),
                 ('test3', 'test3@testing.com', 35, NOW());
         ");
@@ -203,7 +203,7 @@ class SoftDeleteTest extends DbTestCase
 
         $testModel = $this->model->withTrashed()->find(1);
         $testModel->restore();
-        
+
         $query = $this->connectToDatabase()->prepare("
             SELECT
                 id, deleted_at
@@ -230,8 +230,8 @@ class SoftDeleteTest extends DbTestCase
             INSERT INTO test_soft_delete
                 (name, email, age, deleted_at)
             VALUES
-                ('test1', 'test1@testing.com', 15, NULL), 
-                ('test2', 'test2@testing.com', 25, NOW()), 
+                ('test1', 'test1@testing.com', 15, NULL),
+                ('test2', 'test2@testing.com', 25, NOW()),
                 ('test3', 'test3@testing.com', 35, NULL);
         ");
 

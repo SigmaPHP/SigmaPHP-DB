@@ -39,14 +39,4 @@ class Connector implements ConnectorInterface
             $this->configs['pass']
         );
     }
-
-    /**
-     * Get the database name.
-     *
-     * @return string
-     */
-    public function getDatabaseName()
-    {
-        return $this->configs['name'];
-    }
 }

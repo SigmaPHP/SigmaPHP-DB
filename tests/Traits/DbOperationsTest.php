@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use SigmaPHP\DB\Tests\TestCases\DbTestCase;
 use SigmaPHP\DB\Traits\DbOperations;
@@ -12,7 +12,7 @@ class DbOperationsTest extends DbTestCase
      * @var object $testTrait
      */
     private $testTrait;
-    
+
     /**
      * DbOperationsTest SetUp
      *
@@ -26,7 +26,7 @@ class DbOperationsTest extends DbTestCase
         // implements DbOperations Trait
         $this->testTrait = $this->createTestObject();
     }
-    
+
     /**
      * Create new instance from test class.
      *
@@ -38,10 +38,15 @@ class DbOperationsTest extends DbTestCase
             use DbOperations;
 
             private $dbConnection;
-            
+
             public function __construct($dbConnection)
             {
                 $this->dbConnection = $dbConnection;
+            }
+
+            public function db()
+            {
+                return $this->dbConnection;
             }
         };
     }
@@ -88,11 +93,11 @@ class DbOperationsTest extends DbTestCase
             ]
         );
 
-        // insert method uses batch insert , so it returns only 
+        // insert method uses batch insert , so it returns only
         // the PK value for the first inserted row only :(
         $this->assertEquals(
-            1, 
-            $this->testTrait->getLatestInsertedRowPrimaryKeyValue()  
+            1,
+            $this->testTrait->getLatestInsertedRowPrimaryKeyValue()
         );
     }
 
@@ -128,7 +133,7 @@ class DbOperationsTest extends DbTestCase
         $this->assertEquals('email1_updated', $dataWasUpdated
             ->fetch()['email']);
     }
-    
+
     /**
      * Test update all data in table if no condition was set.
      *
