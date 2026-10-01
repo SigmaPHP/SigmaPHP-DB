@@ -13,7 +13,6 @@ const VERSION = "v0.1.16";
 // initiate new console app
 $app = new App();
 
-$app->setAppName('SigmaPHP-DB');
 $app->setAppDescription('CLI utilities for `SigmaPHP-DB`');
 $app->setAppVersion(VERSION);
 
@@ -25,6 +24,15 @@ $app->addGlobalOption(
     DataType::STRING
 );
 
-$app->loadCommands(__DIR__ . '/../src/Commands', 'SigmaPHP\\DB\\Commands');
+$app->addCommand(\SigmaPHP\DB\Commands\CreateConfig::class);
+$app->addCommand(\SigmaPHP\DB\Commands\CreateMigration::class);
+$app->addCommand(\SigmaPHP\DB\Commands\CreateModel::class);
+$app->addCommand(\SigmaPHP\DB\Commands\CreateSeeder::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Drop::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Fresh::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Migrate::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Rollback::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Seed::class);
+$app->addCommand(\SigmaPHP\DB\Commands\Truncate::class);
 
 $app->run();
