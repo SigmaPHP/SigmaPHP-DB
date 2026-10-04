@@ -54,11 +54,7 @@ class Seed extends Command
 
         if ($this->hasOption('file')) {
             // remove the file extension ".php" if exists
-            $seeders[] = str_replace(
-                '.php',
-                '',
-                (string) $this->getOption('file')
-            );
+            $seeders[] = str_replace('.php', '', $this->getOption('file'));
         } else {
             $seeders = $filesystem->list($seederFilesPath, false, false);
         }

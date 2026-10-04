@@ -39,7 +39,7 @@ class CreateSeeder extends Command
      */
     public function execute()
     {
-        $fileName = (string) $this->getArgument('name');
+        $fileName = $this->getArgument('name');
         $configs = $this->loadConfigs($this->getOption('config'));
 
         $filesystem = new Filesystem();

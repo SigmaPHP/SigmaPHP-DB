@@ -54,11 +54,7 @@ class Migrate extends Command
 
         if ($this->hasOption('file')) {
             // remove the file extension ".php" if exists
-            $migrations[] = str_replace(
-                '.php',
-                '',
-                (string) $this->getOption('file')
-            );
+            $migrations[] = str_replace('.php', '', $this->getOption('file'));
         } else {
             $migrations = $filesystem->list($migrationFilesPath, false, false);
         }
