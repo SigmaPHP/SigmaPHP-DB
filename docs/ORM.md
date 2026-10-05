@@ -408,7 +408,7 @@ class Post extends Model
     {
         return $this->hasRelation(
             Post::class,
-            'id'
+            'id',
             'user_id',
         )[0] ?? null;
     }
