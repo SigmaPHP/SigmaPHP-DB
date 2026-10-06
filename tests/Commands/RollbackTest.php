@@ -25,18 +25,7 @@ class RollbackTest extends CommandTestCase
         $logger = new Logger($this->connectToDatabase(), 'db_logs');
         $logger->log('UsersMigration');
 
-        $command = new _Rollback();
-
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
+        $command = $this->commandFactory(_Rollback::class);
 
         $command->execute();
 
@@ -59,18 +48,7 @@ class RollbackTest extends CommandTestCase
         $logger = new Logger($this->connectToDatabase(), 'db_logs');
         $logger->log('UsersMigration');
 
-        $command = new _Rollback();
-
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
+        $command = $this->commandFactory(_Rollback::class);
         $command->_options()['date']->setValue(date('Y-m-d'));
 
         $command->execute();

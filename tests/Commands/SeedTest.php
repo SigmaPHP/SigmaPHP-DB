@@ -20,18 +20,7 @@ class SeedTest extends CommandTestCase
     {
         $this->createTestTable('users');
 
-        $command = new _Seed();
-
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
+        $command = $this->commandFactory(_Seed::class);
 
         $command->execute();
 

@@ -2,8 +2,11 @@
 
 namespace SigmaPHP\DB\Tests\TestCases;
 
+use SigmaPHP\Console\Command;
 use SigmaPHP\DB\Tests\TestCases\DbTestCase;
 use SigmaPHP\Console\IO;
+use SigmaPHP\Console\Option;
+use SigmaPHP\Console\DataType;
 
 /**
  * Command Test Case
@@ -62,7 +65,6 @@ class CommandTestCase extends DbTestCase
                 ];
                 CONFIG
             );
-
         }
     }
 
@@ -80,5 +82,46 @@ class CommandTestCase extends DbTestCase
         if (file_exists('fake_input_stream')) {
             unlink('fake_input_stream');
         }
+    }
+
+    /**
+     * Command factory.
+     *
+     * @param string $class
+     * @return Command
+     */
+    protected function commandFactory($class)
+    {
+        $command = new $class();
+
+        $command->setIOHandler($this->ioHandler);
+
+        $command->addOption(
+            'config',
+            '',
+            'Set config file path',
+            Option::PARAMETER_REQUIRED,
+            DataType::STRING
+        );
+
+        $command->_options()['config']->setValue('config.php');
+
+        return $command;
+    }
+
+    /**
+     * Inject input into a stream.
+     *
+     * @param string $input
+     * @return void
+     */
+    protected function injectInput($input)
+    {
+        $res = fopen('fake_input_stream', 'r+');
+
+        ftruncate($res, 0);
+        rewind($res);
+        fwrite($res, $input);
+        rewind($res);
     }
 }
