@@ -4,7 +4,6 @@ namespace SigmaPHP\DB\Commands;
 
 use SigmaPHP\Console\Command;
 use SigmaPHP\Console\DataType;
-use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
 use SigmaPHP\DB\Traits\DbConfigs;
 use SigmaPHP\Filesystem\Filesystem;
 

@@ -6,7 +6,6 @@ use Doctrine\Inflector\InflectorFactory;
 use SigmaPHP\Console\Command;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
-use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
 use SigmaPHP\DB\Traits\DbConfigs;
 use SigmaPHP\Filesystem\Filesystem;
 use SigmaPHP\DB\Commands\CreateMigration;
