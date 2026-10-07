@@ -23,6 +23,7 @@ class RollbackTest extends CommandTestCase
 
         // create fake log for users table creation
         $logger = new Logger($this->connectToDatabase(), 'db_logs');
+
         $logger->log('UsersMigration');
 
         $command = $this->commandFactory(_Rollback::class);
@@ -46,9 +47,11 @@ class RollbackTest extends CommandTestCase
 
         // create fake log for users table creation
         $logger = new Logger($this->connectToDatabase(), 'db_logs');
+
         $logger->log('UsersMigration');
 
         $command = $this->commandFactory(_Rollback::class);
+
         $command->_options()['date']->setValue(date('Y-m-d'));
 
         $command->execute();

@@ -20,24 +20,9 @@ class DropTest extends CommandTestCase
     {
         $this->createTestTable('users');
 
-        $command = new _Drop();
+        $command = $this->commandFactory(_Drop::class);
 
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
-
-        $res = fopen('fake_input_stream', 'r+');
-        ftruncate($res, 0);
-        rewind($res);
-        fwrite($res, 'YES');
-        rewind($res);
+        $this->injectInput('Yes');
 
         $command->execute();
 

@@ -19,16 +19,8 @@ class CreateSeederTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = __DIR__ . '/database/seeders/FooSeeder.php';
-        $command = new _CreateSeeder();
 
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
+        $command = $this->commandFactory(_CreateSeeder::class);
 
         $command->_arguments()['name']->setValue('Foo');
         $command->_options()['config']->setValue('config.php');

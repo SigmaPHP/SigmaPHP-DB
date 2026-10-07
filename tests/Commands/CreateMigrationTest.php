@@ -19,16 +19,10 @@ class CreateMigrationTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = __DIR__ . '/database/migrations/FooMigration.php';
-        $command = new _CreateMigration();
 
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
+        $command = $this->commandFactory(_CreateMigration::class);
+
+        $this->injectInput('Yes');
 
         $command->_arguments()['name']->setValue('Foo');
         $command->_options()['config']->setValue('config.php');

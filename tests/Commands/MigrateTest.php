@@ -18,18 +18,7 @@ class MigrateTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $command = new _Migrate();
-
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
+        $command = $this->commandFactory(_Migrate::class);
 
         $command->execute();
 
@@ -48,19 +37,7 @@ class MigrateTest extends CommandTestCase
      */
     public function testFileOption()
     {
-        $command = new _Migrate();
-
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
-        $command->_options()['file']->setValue('UsersMigration.php');
+        $command = $this->commandFactory(_Migrate::class);
 
         $command->execute();
 

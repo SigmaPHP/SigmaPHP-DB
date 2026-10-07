@@ -17,9 +17,9 @@ class CreateConfigTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = 'database.php';
-        $command = new _CreateConfig();
 
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(_CreateConfig::class);
+
         $command->execute();
 
         $this->assertTrue(file_exists($targetPath));
@@ -37,9 +37,8 @@ class CreateConfigTest extends CommandTestCase
      */
     public function testPathOption()
     {
-        $command = new _CreateConfig();
+        $command = $this->commandFactory(_CreateConfig::class);
 
-        $command->setIOHandler($this->ioHandler);
         $command->_options()['path']->setValue(__DIR__ . '/custom.php');
 
         $command->execute();

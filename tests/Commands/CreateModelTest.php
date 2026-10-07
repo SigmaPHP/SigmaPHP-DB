@@ -19,16 +19,8 @@ class CreateModelTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = __DIR__ . '/database/models/Users.php';
-        $command = new _CreateModel();
 
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
+        $command = $this->commandFactory(_CreateModel::class);
 
         $command->_arguments()['name']->setValue('Users');
         $command->_options()['config']->setValue('config.php');

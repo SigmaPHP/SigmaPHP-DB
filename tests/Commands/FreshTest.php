@@ -29,24 +29,9 @@ class FreshTest extends CommandTestCase
 
         $insert->execute();
 
-        $command = new _Fresh();
+        $command = $this->commandFactory(_Fresh::class);
 
-        $command->setIOHandler($this->ioHandler);
-        $command->addOption(
-            'config',
-            '',
-            'Set config file path',
-            Option::PARAMETER_REQUIRED,
-            DataType::STRING
-        );
-
-        $command->_options()['config']->setValue('config.php');
-
-        $res = fopen('fake_input_stream', 'r+');
-        ftruncate($res, 0);
-        rewind($res);
-        fwrite($res, 'YES');
-        rewind($res);
+        $this->injectInput('Yes');
 
         $command->execute();
 
