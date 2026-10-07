@@ -20,10 +20,9 @@ class CreateSeederTest extends CommandTestCase
     {
         $targetPath = __DIR__ . '/database/seeders/FooSeeder.php';
 
-        $command = $this->commandFactory(_CreateSeeder::class);
+        $command = $this->commandFactory(CreateSeeder::class);
 
-        $command->_arguments()['name']->setValue('Foo');
-        $command->_options()['config']->setValue('config.php');
+        $command->getArguments()['name']->setValue('Foo');
 
         $command->execute();
 
@@ -33,10 +32,4 @@ class CreateSeederTest extends CommandTestCase
             unlink($targetPath);
         }
     }
-}
-
-class _CreateSeeder extends CreateSeeder
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

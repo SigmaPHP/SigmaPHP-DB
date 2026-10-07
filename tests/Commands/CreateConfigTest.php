@@ -18,7 +18,7 @@ class CreateConfigTest extends CommandTestCase
     {
         $targetPath = 'database.php';
 
-        $command = $this->commandFactory(_CreateConfig::class);
+        $command = $this->commandFactory(CreateConfig::class);
 
         $command->execute();
 
@@ -37,9 +37,9 @@ class CreateConfigTest extends CommandTestCase
      */
     public function testPathOption()
     {
-        $command = $this->commandFactory(_CreateConfig::class);
+        $command = $this->commandFactory(CreateConfig::class);
 
-        $command->_options()['path']->setValue(__DIR__ . '/custom.php');
+        $command->getOptions()['path']->setValue(__DIR__ . '/custom.php');
 
         $command->execute();
 
@@ -49,10 +49,4 @@ class CreateConfigTest extends CommandTestCase
             unlink(__DIR__ . '/custom.php');
         }
     }
-}
-
-class _CreateConfig extends CreateConfig
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

@@ -20,12 +20,11 @@ class CreateMigrationTest extends CommandTestCase
     {
         $targetPath = __DIR__ . '/database/migrations/FooMigration.php';
 
-        $command = $this->commandFactory(_CreateMigration::class);
+        $command = $this->commandFactory(CreateMigration::class);
 
         $this->injectInput('Yes');
 
-        $command->_arguments()['name']->setValue('Foo');
-        $command->_options()['config']->setValue('config.php');
+        $command->getArguments()['name']->setValue('Foo');
 
         $command->execute();
 
@@ -35,10 +34,4 @@ class CreateMigrationTest extends CommandTestCase
             unlink($targetPath);
         }
     }
-}
-
-class _CreateMigration extends CreateMigration
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

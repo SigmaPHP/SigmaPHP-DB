@@ -29,7 +29,7 @@ class TruncateTest extends CommandTestCase
 
         $insert->execute();
 
-        $command = $this->commandFactory(_Truncate::class);
+        $command = $this->commandFactory(Truncate::class);
 
         $this->injectInput('Yes');
 
@@ -44,10 +44,4 @@ class TruncateTest extends CommandTestCase
 
         $this->dropTestTable('users');
     }
-}
-
-class _Truncate extends Truncate
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

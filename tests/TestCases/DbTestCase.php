@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace SigmaPHP\DB\Tests\TestCases;
 
@@ -13,7 +13,7 @@ class DbTestCase extends TestCase
      * @var array $dbConfigs
      */
     protected $dbConfigs;
-    
+
     /**
      * DbTestCase SetUp
      *
@@ -36,7 +36,7 @@ class DbTestCase extends TestCase
         // create config file
         $this->createConfigFile();
     }
-    
+
     /**
      * DbTestCase TearDown
      *
@@ -47,10 +47,10 @@ class DbTestCase extends TestCase
         $this->dropTestTable();
         $this->deleteConfigFile();
     }
-    
+
     /**
      * Connect to database.
-     * 
+     *
      * @return \PDO
      */
     protected function connectToDatabase()
@@ -109,9 +109,9 @@ class DbTestCase extends TestCase
         $tableExists = $this->connectToDatabase()->prepare("
             SELECT
                 TABLE_NAME
-            FROM 
+            FROM
                 INFORMATION_SCHEMA.TABLES
-            WHERE 
+            WHERE
                 TABLE_SCHEMA = '{$this->dbConfigs['name']}'
             AND
                 TABLE_NAME = '{$table}'
@@ -145,7 +145,7 @@ class DbTestCase extends TestCase
 
         return array_values($fields);
     }
-    
+
     /**
      * Create dummy config file for testing.
      *
@@ -155,7 +155,7 @@ class DbTestCase extends TestCase
     {
         if (!file_exists('database.php')) {
             file_put_contents(
-                'database.php', 
+                'database.php',
                 <<<CONFIG
                 <?php
 
@@ -176,7 +176,7 @@ class DbTestCase extends TestCase
             );
         }
     }
-    
+
     /**
      * Delete testing config file.
      *

@@ -20,7 +20,7 @@ class DropTest extends CommandTestCase
     {
         $this->createTestTable('users');
 
-        $command = $this->commandFactory(_Drop::class);
+        $command = $this->commandFactory(Drop::class);
 
         $this->injectInput('Yes');
 
@@ -28,10 +28,4 @@ class DropTest extends CommandTestCase
 
         $this->assertFalse($this->checkTableExists('users'));
     }
-}
-
-class _Drop extends Drop
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

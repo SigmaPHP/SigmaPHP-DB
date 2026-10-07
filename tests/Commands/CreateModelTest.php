@@ -20,10 +20,9 @@ class CreateModelTest extends CommandTestCase
     {
         $targetPath = __DIR__ . '/database/models/Users.php';
 
-        $command = $this->commandFactory(_CreateModel::class);
+        $command = $this->commandFactory(CreateModel::class);
 
-        $command->_arguments()['name']->setValue('Users');
-        $command->_options()['config']->setValue('config.php');
+        $command->getArguments()['name']->setValue('Users');
 
         $command->execute();
 
@@ -33,10 +32,4 @@ class CreateModelTest extends CommandTestCase
             unlink($targetPath);
         }
     }
-}
-
-class _CreateModel extends CreateModel
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

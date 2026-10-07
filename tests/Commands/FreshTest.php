@@ -29,7 +29,7 @@ class FreshTest extends CommandTestCase
 
         $insert->execute();
 
-        $command = $this->commandFactory(_Fresh::class);
+        $command = $this->commandFactory(Fresh::class);
 
         $this->injectInput('Yes');
 
@@ -51,10 +51,4 @@ class FreshTest extends CommandTestCase
         $this->dropTestTable('users');
         $this->dropTestTable('db_logs');
     }
-}
-
-class _Fresh extends Fresh
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

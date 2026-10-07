@@ -18,7 +18,7 @@ class MigrateTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $command = $this->commandFactory(_Migrate::class);
+        $command = $this->commandFactory(Migrate::class);
 
         $command->execute();
 
@@ -37,7 +37,7 @@ class MigrateTest extends CommandTestCase
      */
     public function testFileOption()
     {
-        $command = $this->commandFactory(_Migrate::class);
+        $command = $this->commandFactory(Migrate::class);
 
         $command->execute();
 
@@ -47,10 +47,4 @@ class MigrateTest extends CommandTestCase
         $this->dropTestTable('users');
         $this->dropTestTable('db_logs');
     }
-}
-
-class _Migrate extends Migrate
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

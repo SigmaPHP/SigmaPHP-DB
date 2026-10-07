@@ -7,6 +7,7 @@ use SigmaPHP\DB\Tests\TestCases\DbTestCase;
 use SigmaPHP\Console\IO;
 use SigmaPHP\Console\Option;
 use SigmaPHP\Console\DataType;
+use SigmaPHP\Console\Interfaces\CommandInterface;
 
 /**
  * Command Test Case
@@ -87,8 +88,8 @@ class CommandTestCase extends DbTestCase
     /**
      * Command factory.
      *
-     * @param string $class
-     * @return Command
+     * @param Command $class
+     * @return CommandInterface
      */
     protected function commandFactory($class)
     {
@@ -104,7 +105,7 @@ class CommandTestCase extends DbTestCase
             DataType::STRING
         );
 
-        $command->_options()['config']->setValue('config.php');
+        $command->getOptions()['config']->setValue('config.php');
 
         return $command;
     }

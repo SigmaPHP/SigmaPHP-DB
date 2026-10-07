@@ -20,7 +20,7 @@ class SeedTest extends CommandTestCase
     {
         $this->createTestTable('users');
 
-        $command = $this->commandFactory(_Seed::class);
+        $command = $this->commandFactory(Seed::class);
 
         $command->execute();
 
@@ -50,7 +50,7 @@ class SeedTest extends CommandTestCase
     {
         $this->createTestTable('users');
 
-        $command = $this->commandFactory(_Seed::class);
+        $command = $this->commandFactory(Seed::class);
 
         $command->execute();
 
@@ -69,10 +69,4 @@ class SeedTest extends CommandTestCase
 
         $this->dropTestTable('users');
     }
-}
-
-class _Seed extends Seed
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

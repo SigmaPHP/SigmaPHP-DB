@@ -26,7 +26,7 @@ class RollbackTest extends CommandTestCase
 
         $logger->log('UsersMigration');
 
-        $command = $this->commandFactory(_Rollback::class);
+        $command = $this->commandFactory(Rollback::class);
 
         $command->execute();
 
@@ -50,9 +50,9 @@ class RollbackTest extends CommandTestCase
 
         $logger->log('UsersMigration');
 
-        $command = $this->commandFactory(_Rollback::class);
+        $command = $this->commandFactory(Rollback::class);
 
-        $command->_options()['date']->setValue(date('Y-m-d'));
+        $command->getOptions()['date']->setValue(date('Y-m-d'));
 
         $command->execute();
 
@@ -60,10 +60,4 @@ class RollbackTest extends CommandTestCase
 
         $this->dropTestTable('db_logs');
     }
-}
-
-class _Rollback extends Rollback
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }
