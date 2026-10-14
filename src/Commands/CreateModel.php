@@ -65,6 +65,14 @@ class CreateModel extends Command
         $className = ucfirst($fileName);
         $modelFile = $modelsFilesPath . '/' . $className . '.php';
 
+        if ($filesystem->exists($modelFile)) {
+            $this->info(
+                "The model '{$className}' already exists"
+            );
+
+            return;
+        }
+
         $filesystem->create($modelFile);
         $filesystem->write($modelFile,
             str_replace(
@@ -84,7 +92,8 @@ class CreateModel extends Command
             $migrationFileName = $inflector->pluralize($fileName);
 
             $createMigrationCommand = new CreateMigration($this->options);
-            $createMigrationCommand->getArgument('name')->setValue(
+
+            $createMigrationCommand->getArguments()['name']->setValue(
                 "Create{$migrationFileName}Table"
             );
 

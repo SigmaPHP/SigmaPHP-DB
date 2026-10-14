@@ -22,8 +22,6 @@ class CreateMigrationTest extends CommandTestCase
 
         $command = $this->commandFactory(CreateMigration::class);
 
-        $this->injectInput('Yes');
-
         $command->getArguments()['name']->setValue('Foo');
 
         $command->execute();
@@ -33,5 +31,26 @@ class CreateMigrationTest extends CommandTestCase
         if (file_exists($targetPath)) {
             unlink($targetPath);
         }
+    }
+
+    /**
+     * Test migration won't be created if already exists.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testMigrationWillNotBeCreatedIfAlreadyExists()
+    {
+        $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
+
+        $command = $this->commandFactory(CreateMigration::class);
+
+        $command->getArguments()['name']->setValue('Users');
+
+        $command->execute();
+
+        $this->expectOutputRegex(
+            "/The migration 'UsersMigration' already exists/"
+        );
     }
 }

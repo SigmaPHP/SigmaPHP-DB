@@ -122,11 +122,19 @@ class CreateMigration extends Command
         // create the file and write the content
         $migrationFile = $migrationFilesPath . '/' . $className . '.php';
 
+        if ($filesystem->exists($migrationFile)) {
+            $this->info(
+                "The migration '{$className}' already exists"
+            );
+
+            return;
+        }
+
         $filesystem->create($migrationFile);
         $filesystem->write($migrationFile, $template);
 
         $this->success(
-            "The migration file '{$className}' was created successfully"
+            "The migration '{$className}' was created successfully"
         );
     }
 }

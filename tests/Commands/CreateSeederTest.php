@@ -32,4 +32,25 @@ class CreateSeederTest extends CommandTestCase
             unlink($targetPath);
         }
     }
+
+    /**
+     * Test seeder won't be created if already exists.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testSeederWillNotBeCreatedIfAlreadyExists()
+    {
+        $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
+
+        $command = $this->commandFactory(CreateSeeder::class);
+
+        $command->getArguments()['name']->setValue('Users');
+
+        $command->execute();
+
+        $this->expectOutputRegex(
+            "/The seeder 'UsersSeeder' already exists/"
+        );
+    }
 }

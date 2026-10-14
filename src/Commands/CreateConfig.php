@@ -44,10 +44,16 @@ class CreateConfig extends Command
     {
         $filesystem = new Filesystem();
 
-        $path = $this->getBasePath() . '/database.php';
+        $path = $this->hasOption('path') ?
+            $this->getOption('path') :
+            $this->getBasePath() . '/database.php';
 
-        if ($this->hasOption('path')) {
-            $path = $this->getOption('path');
+        if ($filesystem->exists($path)) {
+            $this->info(
+                "The config file already exists"
+            );
+
+            return;
         }
 
         $filesystem->copy(

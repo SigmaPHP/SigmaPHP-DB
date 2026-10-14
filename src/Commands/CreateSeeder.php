@@ -60,6 +60,14 @@ class CreateSeeder extends Command
 
         $seederFile = $modelsFilesPath . '/' . $className . '.php';
 
+        if ($filesystem->exists($seederFile)) {
+            $this->info(
+                "The seeder '{$className}' already exists"
+            );
+
+            return;
+        }
+
         $filesystem->create($seederFile);
         $filesystem->write($seederFile,
             str_replace(
