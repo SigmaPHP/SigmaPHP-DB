@@ -3,6 +3,8 @@
 namespace SigmaPHP\DB\Commands;
 
 use SigmaPHP\Console\Command;
+use SigmaPHP\Console\DataType;
+use SigmaPHP\Console\Option;
 use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
 use SigmaPHP\DB\Traits\DbConfigs;
 use SigmaPHP\DB\Traits\DbConnection;
@@ -41,7 +43,17 @@ abstract class DbCommand extends Command
 
         $this->filesystem = new Filesystem();
 
-        $this->configs = $this->loadConfigs($this->getOption('config'));
+        $this->addOption(
+            'config',
+            '',
+            'Set config file path',
+            Option::PARAMETER_REQUIRED,
+            DataType::STRING
+        );
+
+        if ($this->hasOption('config')) {
+            $this->configs = $this->loadConfigs($this->getOption('config'));
+        }
     }
 
     /**

@@ -2,11 +2,7 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Db\Commands\DbCommand;
-use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
-use SigmaPHP\DB\Traits\DbMethods;
+use SigmaPHP\DB\Commands\DbCommand;
 
 /**
  * Truncate Command.
@@ -31,6 +27,8 @@ class Truncate extends DbCommand
      */
     public function execute()
     {
+        $this->configs = $this->loadConfigs($this->getOption('config'));
+
         if ($this->question->confirmation(
             "This command will truncate all tables, please confirm"
         ) === false) {
