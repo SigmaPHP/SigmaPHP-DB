@@ -2,21 +2,17 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use Doctrine\Inflector\InflectorFactory;
-use SigmaPHP\Console\Command;
+use SigmaPHP\DB\Commands\DbCommand;
+use SigmaPHP\DB\Commands\CreateMigration;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\DB\Commands\CreateMigration;
+use Doctrine\Inflector\InflectorFactory;
 
 /**
  * Create Model Command.
  */
-class CreateModel extends Command
+class CreateModel extends DbCommand
 {
-    use DbConfigs;
-
     /**
      * Initialize the command.
      *
@@ -51,21 +47,18 @@ class CreateModel extends Command
     public function execute()
     {
         $fileName = $this->getArgument('name');
-        $configs = $this->loadConfigs($this->getOption('config'));
-
-        $filesystem = new Filesystem();
 
         $modelsFilesPath = $this->getBasePath() . '/' .
-            $configs['path_to_models'];
+            $this->configs['path_to_models'];
 
-        if (!$filesystem->exists($modelsFilesPath)) {
-            $filesystem->createDir($modelsFilesPath);
+        if (!$this->filesystem->exists($modelsFilesPath)) {
+            $this->filesystem->createDir($modelsFilesPath);
         }
 
         $className = ucfirst($fileName);
         $modelFile = $modelsFilesPath . '/' . $className . '.php';
 
-        if ($filesystem->exists($modelFile)) {
+        if ($this->filesystem->exists($modelFile)) {
             $this->info(
                 "The model '{$className}' already exists"
             );
@@ -73,12 +66,12 @@ class CreateModel extends Command
             return;
         }
 
-        $filesystem->create($modelFile);
-        $filesystem->write($modelFile,
+        $this->filesystem->create($modelFile);
+        $this->filesystem->write($modelFile,
             str_replace(
                 '$className',
                 $className,
-                $filesystem->read(__DIR__ . '/templates/model.php.dist')
+                $this->filesystem->read(__DIR__ . '/templates/model.php.dist')
             )
         );
 

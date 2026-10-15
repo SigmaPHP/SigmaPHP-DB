@@ -2,7 +2,7 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
+use SigmaPHP\DB\Commands\DbCommand;
 use SigmaPHP\DB\Commands\Drop;
 use SigmaPHP\DB\Commands\Migrate;
 use SigmaPHP\DB\Commands\Seed;
@@ -10,7 +10,7 @@ use SigmaPHP\DB\Commands\Seed;
 /**
  * Fresh Command.
  */
-class Fresh extends Command
+class Fresh extends DbCommand
 {
     /**
      * Initialize the command.

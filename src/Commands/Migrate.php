@@ -2,25 +2,14 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
+use SigmaPHP\DB\Commands\DbCommand;
 use SigmaPHP\DB\Migrations\Logger;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\DB\Traits\DbConnection;
-use SigmaPHP\DB\Traits\DbMethods;
-use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Migrate Command.
  */
-class Migrate extends Command
+class Migrate extends DbCommand
 {
-    use DbConfigs, DbConnection;
-
-    use DbMethods {
-        execute as executeQuery;
-    }
-
     /**
      * Initialize the command.
      *
@@ -45,10 +34,8 @@ class Migrate extends Command
      */
     public function execute()
     {
-        $configs = $this->loadConfigs($this->getOption('config'));
         $migrationFilesPath = $this->getBasePath() . '/' .
-            $configs['path_to_migrations'];
-        $filesystem = new Filesystem();
+            $this->configs['path_to_migrations'];
 
         $migrations = [];
 
@@ -56,10 +43,12 @@ class Migrate extends Command
             // remove the file extension ".php" if exists
             $migrations[] = str_replace('.php', '', $this->getOption('file'));
         } else {
-            $migrations = $filesystem->list($migrationFilesPath, false, false);
+            $migrations = $this->filesystem
+                ->list($migrationFilesPath, false, false);
         }
 
-        $logger = new Logger($this->db(), $configs['logs_table_name']);
+        $logger = new Logger($this->db(), $this->configs['logs_table_name']);
+
         $migrations = $logger->canBeMigrated($migrations);
 
         if (empty($migrations)) {
@@ -79,7 +68,7 @@ class Migrate extends Command
 
             $migrationClass = new $migrationName(
                 $this->db(),
-                $configs['database_connection']['name']
+                $this->configs['database_connection']['name']
             );
 
             $migrationClass->up();
@@ -89,25 +78,5 @@ class Migrate extends Command
         }
 
         $this->success("All migrations were ran successfully");
-    }
-
-    /**
-     * Get the database's connection.
-     *
-     * @return \PDO
-     */
-    public function db()
-    {
-        $configs = $this->loadConfigs($this->getOption('config'));
-
-        if (!isset($configs['database_connection']) ||
-            empty($configs['database_connection'])
-        ) {
-            throw new InvalidConfigurationException(
-                "Missing config 'database_connection'"
-            );
-        }
-
-        return $this->getDbConnection($configs['database_connection']);
     }
 }

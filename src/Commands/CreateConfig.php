@@ -2,17 +2,13 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\DB\Commands\DbCommand;
 
 /**
  * Create Config Command.
  */
-class CreateConfig extends Command
+class CreateConfig extends DbCommand
 {
-    use DbConfigs;
-
     /**
      * Initialize the command.
      *
@@ -42,13 +38,11 @@ class CreateConfig extends Command
      */
     public function execute()
     {
-        $filesystem = new Filesystem();
-
         $path = $this->hasOption('path') ?
             $this->getOption('path') :
             $this->getBasePath() . '/database.php';
 
-        if ($filesystem->exists($path)) {
+        if ($this->filesystem->exists($path)) {
             $this->info(
                 "The config file already exists"
             );
@@ -56,7 +50,7 @@ class CreateConfig extends Command
             return;
         }
 
-        $filesystem->copy(
+        $this->filesystem->copy(
             __DIR__ . '/templates/database.php.dist',
             $path
         );

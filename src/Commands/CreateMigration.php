@@ -2,19 +2,15 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
+use SigmaPHP\DB\Commands\DbCommand;
 use SigmaPHP\Console\DataType;
-use SigmaPHP\DB\Traits\DbConfigs;
 use Doctrine\Inflector\InflectorFactory;
-use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Create Migration Command.
  */
-class CreateMigration extends Command
+class CreateMigration extends DbCommand
 {
-    use DbConfigs;
-
     /**
      * Initialize the command.
      *
@@ -40,16 +36,13 @@ class CreateMigration extends Command
     public function execute()
     {
         $fileName = $this->getArgument('name');
-        $configs = $this->loadConfigs($this->getOption('config'));
-
         $inflector = InflectorFactory::create()->build();
-        $filesystem = new Filesystem();
 
         $migrationFilesPath = $this->getBasePath() . '/' .
-            $configs['path_to_migrations'];
+            $this->configs['path_to_migrations'];
 
-        if (!$filesystem->exists($migrationFilesPath)) {
-            $filesystem->createDir($migrationFilesPath);
+        if (!$this->filesystem->exists($migrationFilesPath)) {
+            $this->filesystem->createDir($migrationFilesPath);
         }
 
         $template = '';
@@ -76,7 +69,7 @@ class CreateMigration extends Command
                 $template = str_replace(
                     ['$className', '$tableName'],
                     [$className, $tableName],
-                    $filesystem->read(
+                    $this->filesystem->read(
                         __DIR__ . '/templates/create_table_migration.php.dist'
                     )
                 );
@@ -105,7 +98,7 @@ class CreateMigration extends Command
                 $template = str_replace(
                     ['$className', '$tableName', '$fieldName'],
                     [$className, $tableName, $fieldName],
-                    $filesystem->read(
+                    $this->filesystem->read(
                         __DIR__ . '/templates/add_column_migration.php.dist'
                     )
                 );
@@ -115,14 +108,16 @@ class CreateMigration extends Command
                 $template = str_replace(
                     '$className',
                     $className,
-                    $filesystem->read(__DIR__ . '/templates/migration.php.dist')
+                    $this->filesystem->read(
+                        __DIR__ . '/templates/migration.php.dist'
+                    )
                 );
         }
 
         // create the file and write the content
         $migrationFile = $migrationFilesPath . '/' . $className . '.php';
 
-        if ($filesystem->exists($migrationFile)) {
+        if ($this->filesystem->exists($migrationFile)) {
             $this->info(
                 "The migration '{$className}' already exists"
             );
@@ -130,8 +125,8 @@ class CreateMigration extends Command
             return;
         }
 
-        $filesystem->create($migrationFile);
-        $filesystem->write($migrationFile, $template);
+        $this->filesystem->create($migrationFile);
+        $this->filesystem->write($migrationFile, $template);
 
         $this->success(
             "The migration '{$className}' was created successfully"

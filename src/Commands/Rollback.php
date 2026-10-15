@@ -2,7 +2,7 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
+use SigmaPHP\DB\Commands\DbCommand;
 use SigmaPHP\DB\Exceptions\InvalidConfigurationException;
 use SigmaPHP\DB\Migrations\Logger;
 use SigmaPHP\DB\Traits\DbConfigs;
@@ -14,14 +14,8 @@ use SigmaPHP\Filesystem\Filesystem;
 /**
  * Rollback Command.
  */
-class Rollback extends Command
+class Rollback extends DbCommand
 {
-    use DbConfigs, DbConnection;
-
-    use DbMethods {
-        execute as executeQuery;
-    }
-
     /**
      * Initialize the command.
      *
@@ -46,11 +40,11 @@ class Rollback extends Command
      */
     public function execute()
     {
-        $configs = $this->loadConfigs($this->getOption('config'));
         $migrationFilesPath = $this->getBasePath() . '/' .
-            $configs['path_to_migrations'];
+            $this->configs['path_to_migrations'];
 
-        $logger = new Logger($this->db(), $configs['logs_table_name']);
+        $logger = new Logger($this->db(), $this->configs['logs_table_name']);
+
         $migrations = $logger->canBeRolledBack(
             $this->getOption('date')
         );
@@ -72,7 +66,7 @@ class Rollback extends Command
 
             $migrationClass = new $migrationName(
                 $this->db(),
-                $configs['database_connection']['name']
+                $this->configs['database_connection']['name']
             );
 
             $migrationClass->down();
@@ -82,25 +76,5 @@ class Rollback extends Command
         }
 
         $this->success("Database was rolled back successfully");
-    }
-
-    /**
-     * Get the database's connection.
-     *
-     * @return \PDO
-     */
-    public function db()
-    {
-        $configs = $this->loadConfigs($this->getOption('config'));
-
-        if (!isset($configs['database_connection']) ||
-            empty($configs['database_connection'])
-        ) {
-            throw new InvalidConfigurationException(
-                "Missing config 'database_connection'"
-            );
-        }
-
-        return $this->getDbConnection($configs['database_connection']);
     }
 }

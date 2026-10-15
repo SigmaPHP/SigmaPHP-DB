@@ -2,18 +2,14 @@
 
 namespace SigmaPHP\DB\Commands;
 
-use SigmaPHP\Console\Command;
+use SigmaPHP\DB\Commands\DbCommand;
 use SigmaPHP\Console\DataType;
-use SigmaPHP\DB\Traits\DbConfigs;
-use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Create Seeder Command.
  */
-class CreateSeeder extends Command
+class CreateSeeder extends DbCommand
 {
-    use DbConfigs;
-
     /**
      * Initialize the command.
      *
@@ -39,15 +35,12 @@ class CreateSeeder extends Command
     public function execute()
     {
         $fileName = $this->getArgument('name');
-        $configs = $this->loadConfigs($this->getOption('config'));
-
-        $filesystem = new Filesystem();
 
         $modelsFilesPath = $this->getBasePath() . '/' .
-            $configs['path_to_seeders'];
+            $this->configs['path_to_seeders'];
 
-        if (!$filesystem->exists($modelsFilesPath)) {
-            $filesystem->createDir($modelsFilesPath);
+        if (!$this->filesystem->exists($modelsFilesPath)) {
+            $this->filesystem->createDir($modelsFilesPath);
         }
 
         $className = ucfirst($fileName);
@@ -60,7 +53,7 @@ class CreateSeeder extends Command
 
         $seederFile = $modelsFilesPath . '/' . $className . '.php';
 
-        if ($filesystem->exists($seederFile)) {
+        if ($this->filesystem->exists($seederFile)) {
             $this->info(
                 "The seeder '{$className}' already exists"
             );
@@ -68,12 +61,12 @@ class CreateSeeder extends Command
             return;
         }
 
-        $filesystem->create($seederFile);
-        $filesystem->write($seederFile,
+        $this->filesystem->create($seederFile);
+        $this->filesystem->write($seederFile,
             str_replace(
                 '$className',
                 $className,
-                $filesystem->read(__DIR__ . '/templates/seeder.php.dist')
+                $this->filesystem->read(__DIR__ . '/templates/seeder.php.dist')
             )
         );
 
