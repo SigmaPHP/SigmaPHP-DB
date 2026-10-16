@@ -97,13 +97,13 @@ class CommandTestCase extends DbTestCase
 
         $command->setIOHandler($this->ioHandler);
 
-        // $command->addOption(
-        //     'config',
-        //     '',
-        //     'Set config file path',
-        //     Option::PARAMETER_REQUIRED,
-        //     DataType::STRING
-        // );
+        $command->addOption(
+            'config',
+            '',
+            'Set config file path',
+            Option::PARAMETER_REQUIRED,
+            DataType::STRING
+        );
 
         $command->getOptions()['config']->setValue('config.php');
 

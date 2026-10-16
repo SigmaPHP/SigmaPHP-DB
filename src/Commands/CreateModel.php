@@ -46,6 +46,8 @@ class CreateModel extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         $fileName = $this->getArgument('name');
 
         $modelsFilesPath = $this->getBasePath() . '/' .

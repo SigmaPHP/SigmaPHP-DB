@@ -35,6 +35,8 @@ class CreateMigration extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         $fileName = $this->getArgument('name');
         $inflector = InflectorFactory::create()->build();
 

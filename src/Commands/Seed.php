@@ -33,6 +33,8 @@ class Seed extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         $seederFilesPath = $this->getBasePath() . '/' .
             $this->configs['path_to_seeders'];
 

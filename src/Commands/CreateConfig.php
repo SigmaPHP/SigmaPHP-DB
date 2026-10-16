@@ -38,6 +38,8 @@ class CreateConfig extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         $path = $this->hasOption('path') ?
             $this->getOption('path') :
             $this->getBasePath() . '/database.php';

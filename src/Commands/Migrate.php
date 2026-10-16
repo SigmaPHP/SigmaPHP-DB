@@ -34,6 +34,8 @@ class Migrate extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         $migrationFilesPath = $this->getBasePath() . '/' .
             $this->configs['path_to_migrations'];
 

@@ -27,6 +27,8 @@ class Drop extends DbCommand
      */
     public function execute()
     {
+        $this->readConfigs();
+
         if ($this->question->confirmation(
             "This command will drop all tables, please confirm"
         ) === false) {
