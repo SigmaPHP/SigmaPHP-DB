@@ -27,7 +27,16 @@ $app->addGlobalOption(
 
 $app->loadCommands(
     dirname(__DIR__, 1) . '/src/Commands',
-    '\SigmaPHP\DB\Commands'
+    '\SigmaPHP\DB\Commands',
+    [
+        'DbCommand',
+        'add_column_migration.php',
+        'create_table_migration.php',
+        'database.php',
+        'migration.php',
+        'model.php',
+        'seeder.php',
+    ]
 );
 
 $app->run();
