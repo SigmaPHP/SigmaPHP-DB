@@ -38,11 +38,12 @@ class CreateSeeder extends DbCommand
 
         $fileName = $this->getArgument('name');
 
-        $modelsFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_seeders'];
+        $seedersFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_seeders']
+        );
 
-        if (!$this->filesystem->exists($modelsFilesPath)) {
-            $this->filesystem->createDir($modelsFilesPath);
+        if (!$this->filesystem->exists($seedersFilesPath)) {
+            $this->filesystem->createDir($seedersFilesPath);
         }
 
         $className = ucfirst($fileName);
@@ -53,7 +54,10 @@ class CreateSeeder extends DbCommand
             $className .= 'Seeder';
         }
 
-        $seederFile = $modelsFilesPath . '/' . $className . '.php';
+        $seederFile = $this->filesystem->concatPath(
+            $seedersFilesPath,
+            $this->filesystem->addExtension($className, 'php')
+        );
 
         if ($this->filesystem->exists($seederFile)) {
             $this->info(
@@ -63,8 +67,8 @@ class CreateSeeder extends DbCommand
             return;
         }
 
-        $this->filesystem->create($seederFile);
-        $this->filesystem->write($seederFile,
+        $this->filesystem->create(
+            $seederFile,
             str_replace(
                 '$className',
                 $className,

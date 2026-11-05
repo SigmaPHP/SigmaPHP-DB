@@ -36,14 +36,17 @@ class Migrate extends DbCommand
     {
         $this->readConfigs();
 
-        $migrationFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_migrations'];
+        $migrationFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_migrations']
+        );
 
         $migrations = [];
 
         if ($this->hasOption('file')) {
-            // remove the file extension ".php" if exists
-            $migrations[] = str_replace('.php', '', $this->getOption('file'));
+            $migrations[] = $this->filesystem->removeExtension(
+                $this->getOption('file'),
+                'php'
+            );
         } else {
             $migrations = $this->filesystem
                 ->list($migrationFilesPath, false, false);
@@ -62,11 +65,12 @@ class Migrate extends DbCommand
         }
 
         foreach ($migrations as $migration) {
-            require_once $migrationFilesPath . "/{$migration}.php";
+            require_once $this->filesystem->concatPath(
+                $migrationFilesPath,
+                $this->filesystem->addExtension($migration, 'php')
+            );
 
-            // remove the sub folders in the path (if any exists)
-            $parts = explode('/', $migration);
-            $migrationName = $parts[count($parts) - 1];
+            $migrationName = $this->filesystem->getFileName($migration);
 
             $migrationClass = new $migrationName(
                 $this->db(),

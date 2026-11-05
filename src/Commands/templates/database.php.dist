@@ -1,15 +1,61 @@
 <?php
 
+// this file contains the configurations for the SigmaPHP-DB library
+
 return [
+    /**
+     * Path to the location where the migration files will be stored.
+     */
     'path_to_migrations'  => 'database/migrations',
-    'path_to_seeders'     => 'database/seeders',
-    'path_to_models'      => 'src/Models',
-    'logs_table_name'     => 'db_logs',
+
+    /**
+     * Path to the location where the seeder files will be stored.
+     */
+    'path_to_seeders' => 'database/seeders',
+
+    /**
+     * Path to the location where the ORM models will be stored.
+     */
+    'path_to_models' => 'src/Models',
+
+    /**
+     * Migration table name. This table will be used to store all logs related
+     * the database migration.
+     */
+    'logs_table_name' => 'db_logs',
+
+    /**
+     * Database connection details.
+     */
     'database_connection' => [
+        /**
+         * Database host (URL or IP).
+         */
         'host' => 'localhost',
+
+        /**
+         * Database username.
+         */
         'user' => 'root',
+
+        /**
+         * Database password.
+         */
         'pass' => 'root',
+
+        /**
+         * Database name.
+         */
         'name' => 'test',
+
+        /**
+         * Database port.
+         */
         'port' => '3306'
-    ]
+    ],
+
+    /**
+     * Other options that could be set for the database.
+     */
+    'options' => [],
 ];

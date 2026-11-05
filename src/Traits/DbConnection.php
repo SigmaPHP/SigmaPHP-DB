@@ -14,9 +14,10 @@ trait DbConnection
      * Create a new database connection instance.
      *
      * @param array $connection
+     * @param array $options
      * @return \PDO
      */
-    public function getDbConnection($connection)
+    public function getDbConnection($connection, $options = [])
     {
         if (empty($connection) || !is_array($connection)) {
             throw new InvalidConfigurationException(
@@ -24,6 +25,6 @@ trait DbConnection
             );
         }
 
-        return (new Connector($connection))->connect();
+        return (new Connector($connection, $options))->connect();
     }
 }

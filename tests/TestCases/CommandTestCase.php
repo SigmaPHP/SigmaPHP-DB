@@ -62,7 +62,8 @@ class CommandTestCase extends DbTestCase
                         'user' => '{$GLOBALS['DB_USER']}',
                         'pass' => '{$GLOBALS['DB_PASS']}',
                         'port' => '{$GLOBALS['DB_PORT']}',
-                    ]
+                    ],
+                    'options' => [],
                 ];
                 CONFIG
             );

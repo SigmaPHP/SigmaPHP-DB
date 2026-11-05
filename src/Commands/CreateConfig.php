@@ -38,11 +38,32 @@ class CreateConfig extends DbCommand
      */
     public function execute()
     {
-        $this->readConfigs();
-
+        // either developer provides the path or we use the root path!
         $path = $this->hasOption('path') ?
             $this->getOption('path') :
-            $this->getBasePath() . '/database.php';
+            $this->getBasePath();
+
+        // create the path if it doesn't exists, also make sure to remove the
+        // file name if it's part of the path, otherwise it will be created
+        // also as a directory :)
+        if (!$this->filesystem->exists($path)) {
+            if (strpos($path, 'php') !== false) {
+                $_path = $this->filesystem->getPath($path);
+
+                // in case the file will be created inside the root path !
+                if (!$this->filesystem->exists($_path)) {
+                    $this->filesystem->createDir($_path);
+                }
+            } else {
+                $this->filesystem->createDir($path);
+            }
+        }
+
+        // add default file name 'database.php', if the provided path
+        // doesn't include one
+        if (strpos($path, 'php') === false) {
+            $path = $this->filesystem->concatPath($path, 'database.php');
+        }
 
         if ($this->filesystem->exists($path)) {
             $this->info(

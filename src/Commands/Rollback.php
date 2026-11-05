@@ -42,8 +42,9 @@ class Rollback extends DbCommand
     {
         $this->readConfigs();
 
-        $migrationFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_migrations'];
+        $migrationFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_migrations']
+        );
 
         $logger = new Logger($this->db(), $this->configs['logs_table_name']);
 
@@ -60,11 +61,12 @@ class Rollback extends DbCommand
         }
 
         foreach ($migrations as $migration) {
-            require_once $migrationFilesPath . "/{$migration}.php";
+            require_once $this->filesystem->concatPath(
+                $migrationFilesPath,
+                $this->filesystem->addExtension($migration, 'php')
+            );
 
-            // remove the sub folders in the path (if any exists)
-            $parts = explode('/', $migration);
-            $migrationName = $parts[count($parts) - 1];
+            $migrationName = $this->filesystem->getFileName($migration);
 
             $migrationClass = new $migrationName(
                 $this->db(),

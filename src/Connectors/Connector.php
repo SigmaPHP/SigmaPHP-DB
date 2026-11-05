@@ -15,13 +15,20 @@ class Connector implements ConnectorInterface
     private $configs;
 
     /**
+     * @var array $options
+     */
+    private $options;
+
+    /**
      * Connector Constructor
      *
      * @param array $configs
+     * @param array $options
      */
-    public function __construct($configs)
+    public function __construct($configs, $options = [])
     {
         $this->configs = $configs;
+        $this->options = $options;
     }
 
     /**
@@ -36,7 +43,8 @@ class Connector implements ConnectorInterface
             dbname={$this->configs['name']};
             port={$this->configs['port']}",
             $this->configs['user'],
-            $this->configs['pass']
+            $this->configs['pass'],
+            $this->options
         );
     }
 }

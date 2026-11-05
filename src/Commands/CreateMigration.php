@@ -40,8 +40,9 @@ class CreateMigration extends DbCommand
         $fileName = $this->getArgument('name');
         $inflector = InflectorFactory::create()->build();
 
-        $migrationFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_migrations'];
+        $migrationFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_migrations']
+        );
 
         if (!$this->filesystem->exists($migrationFilesPath)) {
             $this->filesystem->createDir($migrationFilesPath);
@@ -117,7 +118,10 @@ class CreateMigration extends DbCommand
         }
 
         // create the file and write the content
-        $migrationFile = $migrationFilesPath . '/' . $className . '.php';
+        $migrationFile = $this->filesystem->concatPath(
+            $migrationFilesPath,
+            $this->filesystem->addExtension($className, 'php')
+        );
 
         if ($this->filesystem->exists($migrationFile)) {
             $this->info(
@@ -127,8 +131,7 @@ class CreateMigration extends DbCommand
             return;
         }
 
-        $this->filesystem->create($migrationFile);
-        $this->filesystem->write($migrationFile, $template);
+        $this->filesystem->create($migrationFile, $template);
 
         $this->success(
             "The migration '{$className}' was created successfully"

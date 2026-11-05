@@ -50,15 +50,20 @@ class CreateModel extends DbCommand
 
         $fileName = $this->getArgument('name');
 
-        $modelsFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_models'];
+        $modelsFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_models']
+        );
 
         if (!$this->filesystem->exists($modelsFilesPath)) {
             $this->filesystem->createDir($modelsFilesPath);
         }
 
         $className = ucfirst($fileName);
-        $modelFile = $modelsFilesPath . '/' . $className . '.php';
+
+        $modelFile = $this->filesystem->concatPath(
+            $modelsFilesPath,
+            $this->filesystem->addExtension($className, 'php')
+        );
 
         if ($this->filesystem->exists($modelFile)) {
             $this->info(
@@ -68,8 +73,8 @@ class CreateModel extends DbCommand
             return;
         }
 
-        $this->filesystem->create($modelFile);
-        $this->filesystem->write($modelFile,
+        $this->filesystem->create(
+            $modelFile,
             str_replace(
                 '$className',
                 $className,

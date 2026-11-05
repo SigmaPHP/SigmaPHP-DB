@@ -47,8 +47,30 @@ class ConnectorTest extends TestCase
     public function testPdoConnectionIsCreatedSuccessfully()
     {
         $this->assertInstanceOf(
-            \PDO::class,
+            PDO::class,
             $this->connector->connect()
+        );
+    }
+
+    /**
+     * Test PDO connection could have custom options.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testPdoConnectionCouldHaveCustomOptions()
+    {
+        $this->connector = new Connector(
+            $this->dbConfigs,
+            [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]
+        );
+
+        $this->assertEquals(
+            PDO::FETCH_ASSOC,
+            $this->connector->connect()
+                ->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE)
         );
     }
 }

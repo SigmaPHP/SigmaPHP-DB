@@ -81,6 +81,20 @@ abstract class DbCommand extends Command
             );
         }
 
-        return $this->getDbConnection($this->configs['database_connection']);
+        return $this->getDbConnection(
+            $this->configs['database_connection'],
+            $this->configs['options']
+        );
+    }
+
+    /**
+     * Get the absolute path.
+     *
+     * @param string $path
+     * @return string
+     */
+    public function getAbsolutePath($path)
+    {
+        return $this->filesystem->concatPath($this->getBasePath(), $path);
     }
 }

@@ -35,24 +35,28 @@ class Seed extends DbCommand
     {
         $this->readConfigs();
 
-        $seederFilesPath = $this->getBasePath() . '/' .
-            $this->configs['path_to_seeders'];
+        $seederFilesPath = $this->getAbsolutePath(
+            $this->configs['path_to_seeders']
+        );
 
         $seeders = [];
 
         if ($this->hasOption('file')) {
-            // remove the file extension ".php" if exists
-            $seeders[] = str_replace('.php', '', $this->getOption('file'));
+            $seeders[] = $this->filesystem->removeExtension(
+                $this->getOption('file'),
+                'php'
+            );
         } else {
             $seeders = $this->filesystem->list($seederFilesPath, false, false);
         }
 
         foreach ($seeders as $seeder) {
-            require_once $seederFilesPath . "/{$seeder}.php";
+            require_once $this->filesystem->concatPath(
+                $seederFilesPath,
+                $this->filesystem->addExtension($seeder, 'php')
+            );
 
-            // remove the sub folders in the path (if any exists)
-            $parts = explode('/', $seeder);
-            $seederName = $parts[count($parts) - 1];
+            $seederName = $this->filesystem->getFileName($seeder);
 
             $seed = new $seederName($this->db());
             $seed->run();

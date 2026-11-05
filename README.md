@@ -48,7 +48,7 @@ In the table below , you can find all available commands :
             <td>
                 Create new config file, if no path was provided , a
                 default config file (database.php) will be created 
-                in the root of the project's folder.
+                in the root of the project's directory.
             </td>
         </tr>
         <tr>
